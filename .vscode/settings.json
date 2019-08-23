@@ -1,0 +1,23 @@
+{
+    "files.exclude": {
+        "e2e/": false,
+        "node_modules/": true,
+        "**/*spec.ts": false,
+        "**/*component.css": false,
+        "src/assets": true,
+        "src/favicon.ico": true,
+        "src/karma.conf.js": true,
+        "src/main.ts": true,
+        "src/polyfills.ts": true,
+        "src/test.ts": true,
+        "src/tsconfig.app.json": true,
+        "src/tsconfig.spec.json": true,
+        "src/tslint.json": true,
+        ".editorconfig": true,
+        "browserslist": true,
+        "package-lock.json": true,
+        "tsconfig.json": true,
+        "tslint.json": true,
+        ".gitignore": true,
+      }
+}
