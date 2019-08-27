@@ -1,5 +1,5 @@
 # angular-material
-Angular test app with material
+This angular playground
 
 ## Test app 
 [angular-material](https://sebastiangolian.github.io/angular-material)

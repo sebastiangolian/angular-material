@@ -9,8 +9,6 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatToolbarModule, MatMenuModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, MatDividerModule } from '@angular/material';
 import { HomeComponent } from './components/home/home.component';
 import { NotesComponent } from './components/notes/notes.component';
-import { OktaAuthModule } from '@okta/okta-angular';
-import { environment } from 'src/environments/environment';
 import { AboutComponent } from './components/about/about.component';
 
 @NgModule({

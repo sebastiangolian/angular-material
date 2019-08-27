@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NoteInfo, Note, NotesService } from 'src/app/services/notes.service';
+import { NoteInfo, Note, NotesService } from '../../services/notes.service';
 
 @Component({
   selector: 'app-notes',
