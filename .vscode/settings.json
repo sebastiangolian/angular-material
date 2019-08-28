@@ -12,7 +12,6 @@
         "karma.conf.js": true,
         "package-lock.json": true,
         "tsconfig.json": true,
-        "tsconfig.app.json": true,
         "tsconfig.spec.json": true,
         "tslint.json": true,
       }
