@@ -10,6 +10,7 @@ import { MatToolbarModule, MatMenuModule, MatIconModule, MatInputModule, MatForm
 import { HomeComponent } from './components/home/home.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { AboutComponent } from './components/about/about.component';
+import { FlexComponent } from './components/flex/flex.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AboutComponent } from './components/about/about.component';
     HomeComponent,
     NotesComponent,
     AboutComponent,
+    FlexComponent,
   ],
   imports: [
     BrowserModule,
