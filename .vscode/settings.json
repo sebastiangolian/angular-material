@@ -1,7 +1,6 @@
 {
     "files.exclude": {
         "node_modules/": true,
-        "src/assets": true,
         "src/favicon.ico": true,
         "src/main.ts": true,
         "src/polyfills.ts": true,

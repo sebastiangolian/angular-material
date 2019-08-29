@@ -5,12 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatToolbarModule, MatMenuModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, MatDividerModule } from '@angular/material';
 import { HomeComponent } from './components/home/home.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { AboutComponent } from './components/about/about.component';
-import { FlexComponent } from './components/flex/flex.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +16,11 @@ import { FlexComponent } from './components/flex/flex.component';
     HomeComponent,
     NotesComponent,
     AboutComponent,
-    FlexComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
