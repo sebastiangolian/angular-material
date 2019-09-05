@@ -1,24 +1,2 @@
 <h1>angular-material</h1>
 
-<!-- <form name="form" #f="ngForm">
-    <mat-form-field class="example-full-width">
-      <input type="text" class="form-control" name="firstname" [(ngModel)]="firstname" #firstname="ngModel" placeholder="Pick one"
-      [matAutocomplete]="auto" matInput>
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let firstname of ['Mary','John','Matt']" [value]="firstname">
-          {{firstname}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form> -->
-
-  <form class="example-form">
-    <mat-form-field class="example-full-width">
-      <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of options" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form>
