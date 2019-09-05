@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatMenuModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, MatDividerModule } from '@angular/material';
+import { MatToolbarModule, MatMenuModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, MatDividerModule, MatAutocompleteModule } from '@angular/material';
 import { HomeComponent } from './components/home/home.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { AboutComponent } from './components/about/about.component';
@@ -23,6 +23,9 @@ import { AboutComponent } from './components/about/about.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    AppRoutingModule,
+
+    MatAutocompleteModule,
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
@@ -31,7 +34,6 @@ import { AboutComponent } from './components/about/about.component';
     MatButtonModule,
     MatListModule,
     MatDividerModule,
-    AppRoutingModule
   ],
   providers: [  
   ],
