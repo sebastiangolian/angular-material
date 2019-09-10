@@ -14,13 +14,14 @@ export interface Post {
 })
 export class PostService {
 
-  posts: Post[]
+  storageName: string = 'posts'
+  items: Post[]
   private nextId = 0
   private subject = new BehaviorSubject<Post[]>([]);
 
   constructor(public http: HttpClient) {
-    this.posts = JSON.parse(localStorage.getItem('posts')) || [];
-    for (const post of this.posts) {
+    this.items = JSON.parse(localStorage.getItem(this.storageName)) || [];
+    for (const post of this.items) {
       if (post.id >= this.nextId) this.nextId = post.id + 1;
     }
     this._update();
@@ -28,16 +29,39 @@ export class PostService {
 
   add(title: string, body: string, image: string): Post {
     const post = {id: this.nextId++, title, body, image};
-    this.posts.push(post);
+    this.items.push(post);
     this._update();
-    console.log(this.posts)
     return post;
   }
 
+  get(id: number): Post {
+    const index = this._find(id);
+    return this.items[index];
+  }
+
+  update(id: number, title: string, body: string, image: string) {
+    const index = this._find(id);
+    this.items[index] = {id, title, body, image};
+    this._update();
+  }
+
+  delete(id: number) {
+    const index = this._find(id);
+    this.items.splice(index, 1);
+    this._update();
+  }
+
   private _update() {
-    localStorage.setItem('notes', JSON.stringify(this.posts));
-    this.subject.next(this.posts.map(
+    localStorage.setItem(this.storageName, JSON.stringify(this.items));
+    this.subject.next(this.items.map(
       post => ({ id: post.id, title: post.title, body: post.body, image: post.image })
     ));
+  }
+
+  private _find(id: number): number {
+    for (let i=0; i<this.items.length; i++) {
+      if (this.items[i].id === id) return i;
+    }
+    throw new Error(`Record with id ${id} was not found!`);
   }
 }
