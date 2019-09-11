@@ -1,59 +1,50 @@
-<!-- <div class="notes">
-  <mat-list>
-    <mat-list-item *ngFor='let note of notes | async'>
-      <a (click)="onSelectNote(note.id)">
-        {{note.title}}
-      </a>
-    </mat-list-item>
-  </mat-list>
-  <mat-divider [vertical]="true"></mat-divider>
-  <mat-divider [vertical]="false"></mat-divider>
-  <div *ngIf="!editNote" class="note-container">
-    <h3>{{currentNote.title}}</h3>
-    <p>
-      {{currentNote.text}}
-    </p>
-    <div>
-      <button mat-raised-button color="primary" (click)="onEditNote()" *ngIf="noteSelected()">Edit</button>
-      <button mat-raised-button color="warn" (click)="onDeleteNote()" *ngIf="noteSelected()">Delete</button>
-      <button mat-raised-button color="primary" (click)="onNewNote()">New Note</button>
-    </div>
+<div *ngIf="!editNote" class="note-container">
+  <h3>{{currentNote.title}}</h3>
+  <p>{{currentNote.text}}</p>
+  <div>
+    <button mat-raised-button color="primary" (click)="onEditNote()" *ngIf="noteSelected()">Edit</button>
+    <button mat-raised-button color="warn" (click)="onDeleteNote()" *ngIf="noteSelected()">Delete</button>
+    <button mat-raised-button color="primary" (click)="onNewNote()">New Note</button>
   </div>
-  <div *ngIf="editNote" class="form-container">
+</div>
+
+<div *ngIf="editNote" class="form-container">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Post
+      </mat-panel-title>
+    </mat-expansion-panel-header>
     <form [formGroup]="editNoteForm" (ngSubmit)="updateNote()">
       <mat-form-field class="full-width">
         <input matInput placeholder="Title" formControlName="title">
       </mat-form-field>
-
       <mat-form-field class="full-width">
         <textarea matInput placeholder="Note text" formControlName="text"></textarea>
       </mat-form-field>
       <button mat-raised-button color="primary">Update</button>
     </form>
-  </div>
-</div> -->
+  </mat-expansion-panel>
+</div>
 
-<table mat-table [dataSource] = "dataSource" class = "mat-elevation-z8"> 
-  <ng-container matColumnDef = "name">
-     <th mat-header-cell *matHeaderCellDef> Dessert (100g)</th>
-     <td mat-cell *matCellDef = "let element"> {{element.name}} </td>
+<table mat-table [dataSource]="notes" class="mat-elevation-z3">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>Id</th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
-  <ng-container matColumnDef = "calories">
-     <th mat-header-cell *matHeaderCellDef>Calories</th>
-     <td mat-cell *matCellDef = "let element"> {{element.calories}} </td>
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
   </ng-container>
-  <ng-container matColumnDef = "fat">
-     <th mat-header-cell *matHeaderCellDef>Fat (g)</th>
-     <td mat-cell *matCellDef = "let element"> {{element.fat}} </td>
+  <ng-container matColumnDef="text">
+    <th mat-header-cell *matHeaderCellDef>Text</th>
+    <td mat-cell *matCellDef="let element"> {{element.text}} </td>
   </ng-container>
-  <ng-container matColumnDef = "carbs">
-     <th mat-header-cell *matHeaderCellDef>Carbs (g)</th>
-     <td mat-cell *matCellDef = "let element"> {{element.carbs}} </td>
+  <ng-container matColumnDef="buttons">
+    <th mat-header-cell *matHeaderCellDef>Text</th>
+    <td mat-cell *matCellDef="let element"><a (click)="onSelectNote(element.id)"><button mat-button>Update</button></a>
+    </td>
   </ng-container>
-  <ng-container matColumnDef = "protein">
-     <th mat-header-cell *matHeaderCellDef>Protein (g)</th>
-    <td mat-cell *matCellDef = "let element"> {{element.protein}} </td>
-  </ng-container> 
-  <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
-  <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="['id', 'title', 'text']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['id', 'title', 'text', 'buttons'];"></tr>
 </table>
