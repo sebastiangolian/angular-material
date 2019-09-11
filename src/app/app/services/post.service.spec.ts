@@ -1,5 +1,4 @@
 import { TestBed, inject, async } from '@angular/core/testing';
-
 import { PostService } from './post.service';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -24,38 +23,35 @@ describe('PostService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should deleteAll', async(() => {
-    Promise.resolve()
-      .then(() => {
-        postService.deleteAll()
-      })
-      .then(() => {
-        expect(postService.getAll().length).toEqual(0);
-      })
-  }));
+  it('should deleteAll', () => {
+    postService.deleteAll()
+    expect(postService.getAll().length).toEqual(0);
+  });
 
+  it('should allow add', () => {
+    postService.deleteAll()
+    postService.add('title', 'body', 'image')
+    expect(postService.getAll().length).toEqual(1);
+  });
 
-  it('should allow add', async(() => {
-    Promise.resolve()
-      .then(() => {
-        postService.add('title', 'body', 'image')
-      })
-      .then(() => {
-        expect(postService.getAll().length).toEqual(1);
-      })
-  }));
-
-  it('should allow get', async(() => {
+  it('should allow get', () => {
+    postService.deleteAll()
+    postService.add('title', 'body', 'image')
     expect(postService.get(0).title).toEqual('title')
-  }));
+  });
 
-  // it('should allow update', async(() => {
-  //   Promise.resolve()
-  //     .then(() => {
-  //       postService.update(0, 'title-update', 'body-update', 'image-update')
-  //     })
-  //     .then(() => {
-  //       expect(postService.get(1).title).toEqual('title-update')
-  //     })
-  // }));
+  it('should allow update', () => {
+    postService.deleteAll()
+    postService.add('title', 'body', 'image')
+    postService.update(0, 'title-update', 'body-update', 'image-update')
+    expect(postService.get(0).title).toEqual('title-update')
+  });
+
+  it('should allow delete', () => {
+    postService.deleteAll()
+    postService.add('title', 'body', 'image')
+    expect(postService.getAll().length).toEqual(1);
+    postService.delete(0)
+    expect(postService.getAll().length).toEqual(0);
+  });
 });

@@ -15,7 +15,7 @@ export interface Post {
 export class PostService {
 
   private storageName: string = 'posts'
-  private items: Post[]
+  private items: Post[] = []
   private nextId = 0
   private subject = new BehaviorSubject<Post[]>([]);
 
@@ -27,11 +27,11 @@ export class PostService {
     this._update();
   }
 
-  add(title: string, body: string, image: string): Promise<Post> {
+  add(title: string, body: string, image: string): Post {
     const post = {id: this.nextId++, title, body, image};
     this.items.push(post);
     this._update();
-    return Promise.resolve(post);
+    return post;
   }
 
   get(id: number): Post {
@@ -40,7 +40,7 @@ export class PostService {
   }
 
   getAll(): Post[] {
-    return JSON.parse(localStorage.getItem(this.storageName)) || [];
+    return this.items;
   }
 
   update(id: number, title: string, body: string, image: string) {
@@ -56,6 +56,8 @@ export class PostService {
   }
 
   deleteAll(): void {
+    this.nextId = 0
+    this.items = []
     localStorage.removeItem(this.storageName)
   }
 

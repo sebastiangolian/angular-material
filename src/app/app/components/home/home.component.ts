@@ -8,5 +8,8 @@ import { Component } from '@angular/core';
 export class HomeComponent {
   model: any;
 
-  constructor() { }
+  constructor() {
+    
+
+  }
 }
