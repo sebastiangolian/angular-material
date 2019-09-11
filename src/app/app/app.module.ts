@@ -11,6 +11,7 @@ import { NotesComponent } from './components/notes/notes.component';
 import { AboutComponent } from './components/about/about.component';
 import { PostComponent } from './components/post/post.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -3,5 +3,7 @@
 body{margin: 0;font-family: sans-serif;}
 h1{margin: 20px;}
 
-.expanded-toolbar {justify-content: space-between;align-items: center;}
-.mat-grid-tile{border:1px solid silver!important;}
+/* nav */
+.mat-toolbar .mat-icon {margin-right:5px;}
+.mat-drawer-container {min-height: 500px; height:auto !important; height: 500px; }
+.mat-drawer-container .mat-button {margin-left: 10px; margin-right: 10px;}
