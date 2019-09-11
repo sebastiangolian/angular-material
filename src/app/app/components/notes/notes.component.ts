@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NoteInfo, Note, NotesService } from '../../services/notes.service';
+import { Note, NotesService } from '../../services/notes.service';
 
 @Component({
   selector: 'app-notes',
@@ -9,7 +9,7 @@ import { NoteInfo, Note, NotesService } from '../../services/notes.service';
   styleUrls: ['./notes.component.css']
 })
 export class NotesComponent implements OnInit {
-  notes = new BehaviorSubject<NoteInfo[]>([]);
+  notes = new BehaviorSubject<Note[]>([]);
   currentNote: Note = { id: -1, title: '', text: '' };
   createNote = false;
   editNote = false;
@@ -26,7 +26,7 @@ export class NotesComponent implements OnInit {
   }
 
   onSelectNote(id: number) {
-    this.currentNote = this.notesModel.getNote(id);
+    this.currentNote = this.notesModel.get(id);
   }
 
   noteSelected(): boolean {
@@ -49,7 +49,7 @@ export class NotesComponent implements OnInit {
 
   onDeleteNote() {
     if (this.currentNote.id < 0) return;
-    this.notesModel.deleteNote(this.currentNote.id);
+    this.notesModel.delete(this.currentNote.id);
     this.currentNote = { id: -1, title: '', text: '' };
     this.editNote = false;
   }
@@ -59,10 +59,10 @@ export class NotesComponent implements OnInit {
     const title = this.editNoteForm.get('title').value;
     const text = this.editNoteForm.get('text').value;
     if (this.createNote) {
-      this.currentNote = this.notesModel.addNote(title, text);
+      this.currentNote = this.notesModel.add(title, text);
     } else {
       const id = this.currentNote.id;
-      this.notesModel.updateNote(id, title, text);
+      this.notesModel.update(id, title, text);
       this.currentNote = { id, title, text };
     }
     this.editNote = false;

@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observer } from 'rxjs';
-
-export class NoteInfo {
-  id: number;
-  title: string;
-}
 
 export class Note {
   id: number;
@@ -16,57 +12,69 @@ export class Note {
   providedIn: 'root'
 })
 export class NotesService {
-  private notes: Note[];
-  private nextId = 0;
-  private notesSubject = new BehaviorSubject<NoteInfo[]>([]);
 
-  constructor() {
-    this.notes = JSON.parse(localStorage.getItem('notes')) || [];
-    for (const note of this.notes) {
-      if (note.id >= this.nextId) this.nextId = note.id+1;
+  private storageName: string = 'notes'
+  private items: Note[] = []
+  private nextId = 0
+  private subject = new BehaviorSubject<Note[]>([]);
+
+  constructor(public http: HttpClient) {
+    this.items = JSON.parse(localStorage.getItem(this.storageName)) || [];
+    for (const post of this.items) {
+      if (post.id >= this.nextId) this.nextId = post.id + 1;
     }
-    this.update();
+    this._update();
   }
 
-  subscribe(observer: Observer<NoteInfo[]>) {
-    this.notesSubject.subscribe(observer);
+  subscribe(observer: Observer<Note[]>) {
+    this.subject.subscribe(observer);
   }
 
-  addNote(title: string, text: string): Note {
-    const note = {id: this.nextId++, title, text};
-    this.notes.push(note);
-    this.update();
-    return note;
+  add(title: string, text: string): Note {
+    const item = {id: this.nextId++, title, text};
+    this.items.push(item);
+    this._update();
+    return item;
   }
 
-  getNote(id: number): Note {
-    const index = this.findIndex(id);
-    return this.notes[index];
+  get(id: number): Note {
+    const index = this._find(id);
+    return this.items[index];
   }
 
-  updateNote(id: number, title: string, text: string) {
-    const index = this.findIndex(id);
-    this.notes[index] = {id, title, text};
-    this.update();
+  getAll(): Note[] {
+    return this.items;
   }
 
-  deleteNote(id: number) {
-    const index = this.findIndex(id);
-    this.notes.splice(index, 1);
-    this.update();
+  update(id: number, title: string, text: string) {
+    const index = this._find(id);
+    this.items[index] = {id, title, text};
+    this._update();
   }
 
-  private update() {
-    localStorage.setItem('notes', JSON.stringify(this.notes));
-    this.notesSubject.next(this.notes.map(
-      note => ({id: note.id, title: note.title})
+  delete(id: number) {
+    const index = this._find(id);
+    this.items.splice(index, 1);
+    this._update();
+  }
+
+  deleteAll(): void {
+    this.nextId = 0
+    this.items = []
+    localStorage.removeItem(this.storageName)
+  }
+
+  private _update() {
+    localStorage.setItem(this.storageName, JSON.stringify(this.items));
+    this.subject.next(this.items.map(
+      item => ({ id: item.id, title: item.title, text: item.text})
     ));
   }
 
-  private findIndex(id: number): number {
-    for (let i=0; i<this.notes.length; i++) {
-      if (this.notes[i].id === id) return i;
+  private _find(id: number): number {
+    for (let i=0; i<this.items.length; i++) {
+      if (this.items[i].id === id) return i;
     }
-    throw new Error(`Note with id ${id} was not found!`);
+    throw new Error(`Record with id ${id} was not found!`);
   }
 }
