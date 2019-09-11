@@ -15,7 +15,6 @@ export class NotesComponent implements OnInit {
   editNote = false;
   editNoteForm: FormGroup;
 
-
   constructor(private formBuilder: FormBuilder, private notesModel: NotesService) { }
 
   ngOnInit() {
@@ -26,21 +25,21 @@ export class NotesComponent implements OnInit {
     });
   }
 
-  onSelectNote(id: number) {
+  onSelect(id: number) {
     this.currentNote = this.notesModel.get(id);
   }
 
-  noteSelected(): boolean {
+  isSelected(): boolean {
     return this.currentNote.id >= 0;
   }
 
-  onNewNote() {
+  onAdd() {
     this.editNoteForm.reset();
     this.createNote = true;
     this.editNote = true;
   }
 
-  onEditNote() {
+  onEdit() {
     if (this.currentNote.id < 0) return;
     this.editNoteForm.get('title').setValue(this.currentNote.title);
     this.editNoteForm.get('text').setValue(this.currentNote.text);
@@ -48,14 +47,14 @@ export class NotesComponent implements OnInit {
     this.editNote = true;
   }
 
-  onDeleteNote() {
+  onDelete() {
     if (this.currentNote.id < 0) return;
     this.notesModel.delete(this.currentNote.id);
     this.currentNote = { id: -1, text: '', title: '' };
     this.editNote = false;
   }
 
-  updateNote() {
+  onUpdate() {
     if (!this.editNoteForm.valid) return;
     const title = this.editNoteForm.get('title').value;
     const text = this.editNoteForm.get('text').value;
@@ -66,6 +65,11 @@ export class NotesComponent implements OnInit {
       this.notesModel.update(id, title, text);
       this.currentNote = { id, title, text };
     }
+    this.editNote = false;
+  }
+
+  onCancel() {
+    this.currentNote = { id: -1, text: '', title: '' };
     this.editNote = false;
   }
 }
