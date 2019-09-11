@@ -10,18 +10,28 @@ import { Note, NotesService } from '../../services/notes.service';
 })
 export class NotesComponent implements OnInit {
   notes = new BehaviorSubject<Note[]>([]);
-  currentNote: Note = { id: -1, title: '', text: '' };
+  currentNote: Note = { id: -1, text: '', title: '' };
   createNote = false;
   editNote = false;
   editNoteForm: FormGroup;
+
+  dataSource: any = [
+    { name: 'Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4 },
+    { name: 'Sandwich', calories: 237, fat: 9, carbs: 37, protein: 4 },
+    { name: 'Eclairs', calories: 262, fat: 16, carbs: 24, protein: 6 },
+    { name: 'Cupcakes', calories: 305, fat: 4, carbs: 67, protein: 4 },
+    { name: 'Gingerbreads', calories: 356, fat: 16, carbs: 49, protein: 4 },
+  ];
+  displayedColumns: string[] = ['name', 'calories', 'fat', 'carbs', 'protein']
+
 
   constructor(private formBuilder: FormBuilder, private notesModel: NotesService) { }
 
   ngOnInit() {
     this.notesModel.subscribe(this.notes);
     this.editNoteForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      text: ['', Validators.required]
+      text: ['', Validators.required],
+      title: ['', Validators.required]
     });
   }
 
@@ -50,7 +60,7 @@ export class NotesComponent implements OnInit {
   onDeleteNote() {
     if (this.currentNote.id < 0) return;
     this.notesModel.delete(this.currentNote.id);
-    this.currentNote = { id: -1, title: '', text: '' };
+    this.currentNote = { id: -1, text: '', title: '' };
     this.editNote = false;
   }
 

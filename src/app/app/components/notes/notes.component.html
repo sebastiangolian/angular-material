@@ -1,4 +1,4 @@
-<div class="notes">
+<!-- <div class="notes">
   <mat-list>
     <mat-list-item *ngFor='let note of notes | async'>
       <a (click)="onSelectNote(note.id)">
@@ -31,4 +31,29 @@
       <button mat-raised-button color="primary">Update</button>
     </form>
   </div>
-</div>
+</div> -->
+
+<table mat-table [dataSource] = "dataSource" class = "mat-elevation-z8"> 
+  <ng-container matColumnDef = "name">
+     <th mat-header-cell *matHeaderCellDef> Dessert (100g)</th>
+     <td mat-cell *matCellDef = "let element"> {{element.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef = "calories">
+     <th mat-header-cell *matHeaderCellDef>Calories</th>
+     <td mat-cell *matCellDef = "let element"> {{element.calories}} </td>
+  </ng-container>
+  <ng-container matColumnDef = "fat">
+     <th mat-header-cell *matHeaderCellDef>Fat (g)</th>
+     <td mat-cell *matCellDef = "let element"> {{element.fat}} </td>
+  </ng-container>
+  <ng-container matColumnDef = "carbs">
+     <th mat-header-cell *matHeaderCellDef>Carbs (g)</th>
+     <td mat-cell *matCellDef = "let element"> {{element.carbs}} </td>
+  </ng-container>
+  <ng-container matColumnDef = "protein">
+     <th mat-header-cell *matHeaderCellDef>Protein (g)</th>
+    <td mat-cell *matCellDef = "let element"> {{element.protein}} </td>
+  </ng-container> 
+  <tr mat-header-row *matHeaderRowDef = "displayedColumns"></tr>
+  <tr mat-row *matRowDef = "let row; columns: displayedColumns;"></tr>
+</table>
