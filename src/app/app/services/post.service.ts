@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observer } from 'rxjs';
 import { Posts } from 'src/app/app/data/post.data';
 
 export interface Post {
@@ -31,6 +31,10 @@ export class PostService {
     }
 
     this._update();
+  }
+
+  subscribe(observer: Observer<Post[]>) {
+    this.subject.subscribe(observer);
   }
 
   fillFromFile(): void {
