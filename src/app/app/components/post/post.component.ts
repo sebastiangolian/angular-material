@@ -11,7 +11,7 @@ export class PostComponent implements OnInit {
   constructor(public postService: PostService) { }
 
   ngOnInit() {
-    
+    console.log(this.postService.getAll())
   }
 
 }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { Posts } from 'src/app/app/data/post.data';
 
 export interface Post {
   id: number;
   title: string;
-  body: string;
+  description: string;
   image: string;
 }
 
@@ -24,11 +25,21 @@ export class PostService {
     for (const post of this.items) {
       if (post.id >= this.nextId) this.nextId = post.id + 1;
     }
+
+    if(this.items.length == 0) {
+      this.fillFromFile()
+    }
+
     this._update();
   }
 
-  add(title: string, body: string, image: string): Post {
-    const post = {id: this.nextId++, title, body, image};
+  fillFromFile(): void {
+    let posts: Array<Post> = Posts
+    this.items = posts
+  }
+
+  add(title: string, description: string, image: string): Post {
+    const post = {id: this.nextId++, title, description, image};
     this.items.push(post);
     this._update();
     return post;
@@ -43,9 +54,9 @@ export class PostService {
     return this.items;
   }
 
-  update(id: number, title: string, body: string, image: string) {
+  update(id: number, title: string, description: string, image: string) {
     const index = this._find(id);
-    this.items[index] = {id, title, body, image};
+    this.items[index] = {id, title, description, image};
     this._update();
   }
 
@@ -64,7 +75,7 @@ export class PostService {
   private _update() {
     localStorage.setItem(this.storageName, JSON.stringify(this.items));
     this.subject.next(this.items.map(
-      post => ({ id: post.id, title: post.title, body: post.body, image: post.image })
+      post => ({ id: post.id, title: post.title, description: post.description, image: post.image })
     ));
   }
 

@@ -30,26 +30,26 @@ describe('PostService', () => {
 
   it('should allow add', () => {
     postService.deleteAll()
-    postService.add('title', 'body', 'image')
+    postService.add('title', 'description', 'image')
     expect(postService.getAll().length).toEqual(1);
   });
 
   it('should allow get', () => {
     postService.deleteAll()
-    postService.add('title', 'body', 'image')
+    postService.add('title', 'description', 'image')
     expect(postService.get(0).title).toEqual('title')
   });
 
   it('should allow update', () => {
     postService.deleteAll()
-    postService.add('title', 'body', 'image')
-    postService.update(0, 'title-update', 'body-update', 'image-update')
+    postService.add('title', 'description', 'image')
+    postService.update(0, 'title-update', 'description-update', 'image-update')
     expect(postService.get(0).title).toEqual('title-update')
   });
 
   it('should allow delete', () => {
     postService.deleteAll()
-    postService.add('title', 'body', 'image')
+    postService.add('title', 'description', 'image')
     expect(postService.getAll().length).toEqual(1);
     postService.delete(0)
     expect(postService.getAll().length).toEqual(0);
