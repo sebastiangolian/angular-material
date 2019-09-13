@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { NotesComponent } from './components/notes/notes.component';
 import { AboutComponent } from './components/about/about.component';
 import { PostComponent } from './components/post/post.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'notes', component: NotesComponent },
   { path: 'posts', component: PostComponent },
   { path: 'about', component: AboutComponent },
   { path: 'logout', component: HomeComponent }

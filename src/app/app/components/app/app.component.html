@@ -2,7 +2,6 @@
     <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
     <button mat-button routerLink="/">angular-material</button>
     <button mat-button routerLink="/"><mat-icon>home</mat-icon>Home</button>
-    <button mat-button routerLink="/notes"><mat-icon>note</mat-icon>Notes</button>
     <button mat-button routerLink="/posts"><mat-icon>post_add</mat-icon>Posts</button>
     <button mat-button routerLink="/about"><mat-icon>info</mat-icon>About</button>
 </mat-toolbar>
@@ -10,7 +9,6 @@
 <mat-sidenav-container autosize>
   <mat-sidenav color="primary" #sidenav mode="side" opened="false">
     <button mat-button routerLink="/">Home</button><br />
-    <button mat-button routerLink="/notes">Notes</button><br />
     <button mat-button routerLink="/posts">Posts</button><br />
     <button mat-button routerLink="/about">About</button><br />
   </mat-sidenav>
