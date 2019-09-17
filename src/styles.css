@@ -7,3 +7,6 @@ h1{margin: 20px;}
 .mat-toolbar .mat-icon {margin-right:5px;}
 .mat-drawer-container {min-height: 500px; height:auto !important; height: 500px; }
 .mat-drawer-container .mat-button {margin-left: 10px; margin-right: 10px;}
+
+/* table */
+.mat-cell{padding: 10px!important;}

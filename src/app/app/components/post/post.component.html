@@ -38,6 +38,9 @@
     </mat-expansion-panel>
   </div>
   
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
   <table mat-table [dataSource]="posts" class="mat-elevation-z3">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>Id</th>

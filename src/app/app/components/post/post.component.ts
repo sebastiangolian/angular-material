@@ -75,4 +75,13 @@ export class PostComponent implements OnInit {
     this.currentPost = { id: -1, title: '', description: '', image: '' };
     this.editPost = false;
   }
+
+  applyFilter(filterValue: string) {
+    console.log(filterValue)
+    // this.posts.filter = filterValue.trim().toLowerCase();
+
+    // if (this.posts.paginator) {
+    //   this.posts.paginator.firstPage();
+    // }
+  }
 }
