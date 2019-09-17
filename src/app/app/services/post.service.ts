@@ -76,6 +76,14 @@ export class PostService {
     localStorage.removeItem(this.storageName)
   }
 
+  setFilter(filter: string): void {
+    this.items = JSON.parse(localStorage.getItem(this.storageName)) || [];
+    this.items = this.items.filter(post => (post.title.indexOf(filter) > -1 || post.description.indexOf(filter) > -1))
+    this.subject.next(this.items.map(
+      post => ({ id: post.id, title: post.title, description: post.description, image: post.image })
+    ));
+  }
+
   private _update() {
     localStorage.setItem(this.storageName, JSON.stringify(this.items));
     this.subject.next(this.items.map(

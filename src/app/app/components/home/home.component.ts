@@ -9,7 +9,6 @@ export class HomeComponent {
   model: any;
 
   constructor() {
-    
-
+   
   }
 }
