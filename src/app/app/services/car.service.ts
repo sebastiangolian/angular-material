@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Car } from '../components/car/car.component';
 import { Cars } from '../data/car.data';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class CarService {
   private storageName: string = 'cars'
   private items: Car[] = []
   private nextId = 0
-  //private subject = new BehaviorSubject<Car[]>([]);
+  private subject = new BehaviorSubject<Car[]>([]);
 
   constructor(public http: HttpClient) {
     this.items = JSON.parse(localStorage.getItem(this.storageName)) || [];
@@ -24,6 +25,10 @@ export class CarService {
     }
 
     this._update();
+  }
+
+  subscribe(observer: Observer<Car[]>) {
+    this.subject.subscribe(observer);
   }
 
   get(id: number): Car {

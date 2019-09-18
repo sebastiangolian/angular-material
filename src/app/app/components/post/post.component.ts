@@ -16,10 +16,10 @@ export class PostComponent implements OnInit {
   editPost = false;
   editPostForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private postModel: PostService) { }
+  constructor(private formBuilder: FormBuilder, private postService: PostService) { }
 
   ngOnInit() {
-    this.postModel.subscribe(this.posts);
+    this.postService.subscribe(this.posts);
     this.editPostForm = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -28,7 +28,7 @@ export class PostComponent implements OnInit {
   }
 
   onSelect(id: number) {
-    this.currentPost = this.postModel.get(id);
+    this.currentPost = this.postService.get(id);
   }
 
   isSelected(): boolean {
@@ -52,7 +52,7 @@ export class PostComponent implements OnInit {
 
   onDelete() {
     if (this.currentPost.id < 0) return;
-    this.postModel.delete(this.currentPost.id);
+    this.postService.delete(this.currentPost.id);
     this.currentPost = { id: -1, title: '', description: '', image: '' };
     this.editPost = false;
   }
@@ -63,10 +63,10 @@ export class PostComponent implements OnInit {
     const description = this.editPostForm.get('description').value;
     const image = this.editPostForm.get('image').value;
     if (this.createPost) {
-      this.currentPost = this.postModel.add(title, description, image);
+      this.currentPost = this.postService.add(title, description, image);
     } else {
       const id = this.currentPost.id;
-      this.postModel.update(id, title, description, image);
+      this.postService.update(id, title, description, image);
       this.currentPost = { id, title, description, image };
     }
     this.editPost = false;
@@ -78,12 +78,12 @@ export class PostComponent implements OnInit {
   }
 
   onFilter(filterValue: string) {
-    this.postModel.setFilter(filterValue)
-    this.postModel.subscribe(this.posts);
+    this.postService.setFilter(filterValue)
+    this.postService.subscribe(this.posts);
   }
 
   onSort(sort: Sort) {
-    this.postModel.setSort(sort)
-    this.postModel.subscribe(this.posts);
+    this.postService.setSort(sort)
+    this.postService.subscribe(this.posts);
   }
 }

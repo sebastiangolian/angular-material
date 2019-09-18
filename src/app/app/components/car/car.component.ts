@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CarService } from '../../services/car.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 export interface Car {
   id: number;
@@ -17,6 +18,7 @@ export interface Car {
   styleUrls: ['./car.component.css']
 })
 export class CarComponent implements OnInit {
+  items = new BehaviorSubject<Car[]>([]);
   currentItem: Car = { id: -1, name: '', color: ''};
   dataSource: MatTableDataSource<Car>;
   editForm: FormGroup;
@@ -27,7 +29,9 @@ export class CarComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private formBuilder: FormBuilder, private carService: CarService) {
-    this.dataSource = new MatTableDataSource(this.carService.getAll());
+    this.carService.subscribe(this.items);
+    //this.dataSource = new MatTableDataSource(this.carService.getAll());
+    //this.dataSource = new MatTableDataSource(this.items.value);
   }
 
   ngOnInit() {
