@@ -102,10 +102,6 @@ export class PostService {
     ));
   }
 
-  private _compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  }
-
   private _update() {
     localStorage.setItem(this.storageName, JSON.stringify(this.items));
     this.subject.next(this.items.map(
