@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observer } from 'rxjs';
 import { Posts } from 'src/app/app/data/post.data';
+import { Sort } from '@angular/material';
 
 export interface Post {
   id: number;
@@ -26,7 +27,7 @@ export class PostService {
       if (post.id >= this.nextId) this.nextId = post.id + 1;
     }
 
-    if(this.items.length == 0) {
+    if (this.items.length == 0) {
       this.fillFromFile()
     }
 
@@ -43,7 +44,7 @@ export class PostService {
   }
 
   add(title: string, description: string, image: string): Post {
-    const post = {id: this.nextId++, title, description, image};
+    const post = { id: this.nextId++, title, description, image };
     this.items.push(post);
     this._update();
     return post;
@@ -60,7 +61,7 @@ export class PostService {
 
   update(id: number, title: string, description: string, image: string) {
     const index = this._find(id);
-    this.items[index] = {id, title, description, image};
+    this.items[index] = { id, title, description, image };
     this._update();
   }
 
@@ -84,6 +85,27 @@ export class PostService {
     ));
   }
 
+  setSort(sort: Sort): void {
+    this.items = JSON.parse(localStorage.getItem(this.storageName)) || [];
+    this.items = this.items.sort((n1:Post, n2:Post) => {
+      if(sort.direction == 'asc'){
+        if (n1[sort.active] < n2[sort.active]) {return 1}
+        if (n1[sort.active] > n2[sort.active]) {return -1}
+      } else {
+        if (n1[sort.active] > n2[sort.active]) {return 1}
+        if (n1[sort.active] < n2[sort.active]) {return -1}
+      }
+      return 0;
+    })
+    this.subject.next(this.items.map(
+      post => ({ id: post.id, title: post.title, description: post.description, image: post.image })
+    ));
+  }
+
+  private _compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
   private _update() {
     localStorage.setItem(this.storageName, JSON.stringify(this.items));
     this.subject.next(this.items.map(
@@ -92,7 +114,7 @@ export class PostService {
   }
 
   private _find(id: number): number {
-    for (let i=0; i<this.items.length; i++) {
+    for (let i = 0; i < this.items.length; i++) {
       if (this.items[i].id === id) return i;
     }
     throw new Error(`Record with id ${id} was not found!`);
