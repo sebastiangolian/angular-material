@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Cars } from '../../data/car.data';
+import { CarService } from '../../services/car.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface Car {
-  id: string;
+  id: number;
   name: string;
   color: string;
 }
@@ -16,19 +17,75 @@ export interface Car {
   styleUrls: ['./car.component.css']
 })
 export class CarComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'color'];
+  currentItem: Car = { id: -1, name: '', color: ''};
   dataSource: MatTableDataSource<Car>;
+  editForm: FormGroup;
+  isCreate = false;
+  isEdit = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor() {
-    this.dataSource = new MatTableDataSource(Cars);
+  constructor(private formBuilder: FormBuilder, private carService: CarService) {
+    this.dataSource = new MatTableDataSource(this.carService.getAll());
   }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.editForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      color: ['', Validators.required]
+    });
+  }
+
+  onSelect(id: number) {
+    this.currentItem = this.carService.get(id);
+  }
+
+  isSelected(): boolean {
+    return this.currentItem.id >= 0;
+  }
+
+  onAdd() {
+    this.editForm.reset();
+    this.isCreate = true;
+    this.isEdit = true;
+  }
+
+  onEdit() {
+    if (this.currentItem.id < 0) return;
+    this.editForm.get('name').setValue(this.currentItem.name);
+    this.editForm.get('color').setValue(this.currentItem.color);
+    this.isCreate = false;
+    this.isEdit = true;
+  }
+
+  onDelete() {
+    if (this.currentItem.id < 0) return;
+    this.carService.delete(this.currentItem.id);
+    this.currentItem = { id: -1, name: '', color: '' };
+    this.isEdit = false;
+  }
+
+  onUpdate() {
+    if (!this.editForm.valid) return;
+    const name = this.editForm.get('name').value;
+    const color = this.editForm.get('color').value;
+    if (this.isCreate) {
+      this.currentItem = this.carService.add(name, color);
+    } else {
+      const id = this.currentItem.id;
+      this.carService.update(id, name, color);
+      this.currentItem = {id, name, color};
+    }
+    this.isEdit = false;
+  }
+
+  onCancel() {
+    this.currentItem = { id: -1, name: '', color: ''};
+    this.isEdit = false;
   }
 
   onFilter(filterValue: string) {

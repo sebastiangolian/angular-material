@@ -1,3 +1,41 @@
+<div *ngIf="!isEdit" class="post-container">
+  <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            Cars
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p *ngIf="isSelected()">Id: {{currentItem.id}}</p>
+      <p *ngIf="isSelected()">Name: {{currentItem.name}}</p>
+      <p *ngIf="isSelected()">Color: {{currentItem.color}}</p>
+      <button mat-raised-button color="primary" (click)="onEdit()" *ngIf="isSelected()">Edit</button>
+      <button mat-raised-button color="warn" (click)="onDelete()" *ngIf="isSelected()">Delete</button>
+      <button mat-raised-button color="primary" (click)="onCancel()" *ngIf="isSelected()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="onAdd()" *ngIf="!isSelected()">Add</button>
+    </mat-expansion-panel>
+</div>
+
+<div *ngIf="isEdit" class="form-container">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Posts
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="editForm" (ngSubmit)="onUpdate()">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="Color" formControlName="color"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary">Update</button>
+      <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+    </form>
+  </mat-expansion-panel>
+</div>
+
+
 <mat-form-field class="input-filter">
   <input matInput (keyup)="onFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
@@ -16,8 +54,13 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
       <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    <ng-container matColumnDef="buttons">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"><a (click)="onSelect(element.id)"><button mat-button>Update</button></a>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="['id', 'name', 'color', 'buttons']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'color', 'buttons'];">
     </tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 100]"></mat-paginator>
