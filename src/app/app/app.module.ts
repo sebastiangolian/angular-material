@@ -9,6 +9,7 @@ import { MatToolbarModule, MatMenuModule, MatIconModule, MatInputModule, MatForm
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { PostComponent } from './components/post/post.component';
+import { CarComponent } from './components/car/car.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { PostComponent } from './components/post/post.component';
     HomeComponent,
     AboutComponent,
     PostComponent,
+    CarComponent,
   ],
   imports: [
     BrowserModule,
