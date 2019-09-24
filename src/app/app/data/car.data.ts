@@ -1,4 +1,4 @@
-import { Car } from '../components/car/car.component';
+import { Car } from '../services/car.service';
 
 export const Cars: Car[] = [
     {id:1, name: "Seat", color: "blue"},
