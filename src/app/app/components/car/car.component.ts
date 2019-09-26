@@ -2,15 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CarService } from '../../services/car.service';
+import { CarService, Car } from '../../services/car.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-
-export interface Car {
-  id: number;
-  name: string;
-  color: string;
-}
 
 @Component({
   selector: 'app-car',
@@ -31,9 +25,12 @@ export class CarComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private carService: CarService) {
     //this.carService.subscribe(this.items);
     this.dataSource = new MatTableDataSource(this.carService.getAll());
+    this.dataSource = new MatTableDataSource(this.carService.getAll());
   }
 
   ngOnInit() {
+    this.carService.subscribe(this.items);
+    console.log(this.items)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 

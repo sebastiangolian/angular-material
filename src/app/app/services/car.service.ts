@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Car } from '../components/car/car.component';
 import { Cars } from '../data/car.data';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observer } from 'rxjs';
+
+export interface Car {
+  id: number;
+  name: string;
+  color: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -61,9 +66,9 @@ export class CarService {
 
   private _update() {
     localStorage.setItem(this.storageName, JSON.stringify(this.items));
-    // this.subject.next(this.items.map(
-    //   item => ({ id: item.id, name: item.name, color: item.color})
-    // ));
+    this.subject.next(this.items.map(
+      item => ({ id: item.id, name: item.name, color: item.color})
+    ));
   }
 
   private _find(id: number): number {
