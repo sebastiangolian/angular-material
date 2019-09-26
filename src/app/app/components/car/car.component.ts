@@ -29,9 +29,8 @@ export class CarComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private formBuilder: FormBuilder, private carService: CarService) {
-    this.carService.subscribe(this.items);
-    //this.dataSource = new MatTableDataSource(this.carService.getAll());
-    //this.dataSource = new MatTableDataSource(this.items.value);
+    //this.carService.subscribe(this.items);
+    this.dataSource = new MatTableDataSource(this.carService.getAll());
   }
 
   ngOnInit() {
