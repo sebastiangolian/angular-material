@@ -1,18 +1,20 @@
+import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Issue, IssueService } from 'src/app/app/services/issue.service';
 
 @Component({
-  selector: 'app-add.dialog',
-  templateUrl: '../../dialogs/add/add.dialog.html',
-  styleUrls: ['../../dialogs/add/add.dialog.css']
+  selector: 'app-issue-add',
+  templateUrl: './issue-add.component.html',
+  styleUrls: ['./issue-add.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+export class IssueAddComponent implements OnInit {
 
-export class AddIssueComponent {
-  constructor(public dialogRef: MatDialogRef<AddIssueComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Issue,
-    public dataService: IssueService) { }
+  constructor(public dialogRef: MatDialogRef<IssueAddComponent>, @Inject(MAT_DIALOG_DATA) public data: Issue, public dataService: IssueService) { }
+
+  ngOnInit() {
+  }
 
   formControl = new FormControl('', [
     Validators.required
@@ -36,4 +38,7 @@ export class AddIssueComponent {
   public confirmAdd(): void {
     this.dataService.addIssue(this.data);
   }
+
+
+
 }
