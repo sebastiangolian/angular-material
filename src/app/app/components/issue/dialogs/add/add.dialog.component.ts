@@ -9,8 +9,8 @@ import { Issue, IssueService } from 'src/app/app/services/issue.service';
   styleUrls: ['../../dialogs/add/add.dialog.css']
 })
 
-export class AddDialogComponent {
-  constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
+export class AddIssueComponent {
+  constructor(public dialogRef: MatDialogRef<AddIssueComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Issue,
     public dataService: IssueService) { }
 

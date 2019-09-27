@@ -8,9 +8,9 @@ import { IssueService } from 'src/app/app/services/issue.service';
   templateUrl: '../../dialogs/edit/edit.dialog.html',
   styleUrls: ['../../dialogs/edit/edit.dialog.css']
 })
-export class EditDialogComponent {
+export class EditIssueComponent {
 
-  constructor(public dialogRef: MatDialogRef<EditDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<EditIssueComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, public dataService: IssueService) { }
 
   formControl = new FormControl('', [

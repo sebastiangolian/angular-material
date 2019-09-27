@@ -4,9 +4,9 @@ import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { fromEvent, BehaviorSubject, Observable, merge } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';
-import { AddDialogComponent } from './dialogs/add/add.dialog.component';
-import { EditDialogComponent } from './dialogs/edit/edit.dialog.component';
-import { DeleteDialogComponent } from './dialogs/delete/delete.dialog.component';
+import { AddIssueComponent } from './dialogs/add/add.dialog.component';
+import { EditIssueComponent } from './dialogs/edit/edit.dialog.component';
+import { DeleteIssueComponent } from './dialogs/delete/delete.dialog.component';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -39,7 +39,7 @@ export class IssueComponent implements OnInit {
   }
 
   addNew(issue: Issue) {
-    const dialogRef = this.dialog.open(AddDialogComponent, {
+    const dialogRef = this.dialog.open(AddIssueComponent, {
       data: {issue: issue }
     });
 
@@ -58,7 +58,7 @@ export class IssueComponent implements OnInit {
     // index row is used just for debugging proposes and can be removed
     this.index = i;
     console.log(this.index);
-    const dialogRef = this.dialog.open(EditDialogComponent, {
+    const dialogRef = this.dialog.open(EditIssueComponent, {
       data: {id: id, title: title, state: state, url: url, created_at: created_at, updated_at: updated_at}
     });
 
@@ -77,7 +77,7 @@ export class IssueComponent implements OnInit {
   deleteItem(i: number, id: number, title: string, state: string, url: string) {
     this.index = i;
     this.id = id;
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteIssueComponent, {
       data: {id: id, title: title, state: state, url: url}
     });
 
