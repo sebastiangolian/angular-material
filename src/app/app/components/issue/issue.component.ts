@@ -4,10 +4,10 @@ import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { fromEvent, BehaviorSubject, Observable, merge } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';
-import { DeleteIssueComponent } from './dialogs/delete/delete.dialog.component';
 import { map } from 'rxjs/operators';
 import { IssueAddComponent } from './dialogs/issue-add/issue-add.component';
 import { IssueEditComponent } from './dialogs/issue-edit/issue-edit.component';
+import { IssueDeleteComponent } from './dialogs/issue-delete/issue-delete.component';
 
 @Component({
   selector: 'app-issue',
@@ -69,7 +69,7 @@ export class IssueComponent implements OnInit {
   deleteItem(i: number, id: number, title: string, state: string, url: string) {
     this.index = i;
     this.id = id;
-    const dialogRef = this.dialog.open(DeleteIssueComponent, {
+    const dialogRef = this.dialog.open(IssueDeleteComponent, {
       data: { id: id, title: title, state: state, url: url }
     });
 

@@ -11,9 +11,9 @@ import { AboutComponent } from './components/about/about.component';
 import { PostComponent } from './components/post/post.component';
 import { CarComponent } from './components/car/car.component';
 import { IssueComponent } from './components/issue/issue.component';
-import { DeleteIssueComponent } from './components/issue/dialogs/delete/delete.dialog.component';
 import { IssueAddComponent } from './components/issue/dialogs/issue-add/issue-add.component';
 import { IssueEditComponent } from './components/issue/dialogs/issue-edit/issue-edit.component';
+import { IssueDeleteComponent } from './components/issue/dialogs/issue-delete/issue-delete.component';
 
 
 @NgModule({
@@ -24,9 +24,9 @@ import { IssueEditComponent } from './components/issue/dialogs/issue-edit/issue-
     PostComponent,
     CarComponent,
     IssueComponent,
-    DeleteIssueComponent,
     IssueAddComponent,
-    IssueEditComponent
+    IssueEditComponent,
+    IssueDeleteComponent
   ],
   imports: [
     BrowserModule,
