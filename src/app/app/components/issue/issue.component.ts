@@ -4,10 +4,10 @@ import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { fromEvent, BehaviorSubject, Observable, merge } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';
-import { EditIssueComponent } from './dialogs/edit/edit.dialog.component';
 import { DeleteIssueComponent } from './dialogs/delete/delete.dialog.component';
 import { map } from 'rxjs/operators';
 import { IssueAddComponent } from './dialogs/issue-add/issue-add.component';
+import { IssueEditComponent } from './dialogs/issue-edit/issue-edit.component';
 
 @Component({
   selector: 'app-issue',
@@ -53,7 +53,7 @@ export class IssueComponent implements OnInit {
     this.id = id;
     this.index = i;
     console.log(this.index);
-    const dialogRef = this.dialog.open(EditIssueComponent, {
+    const dialogRef = this.dialog.open(IssueEditComponent, {
       data: { id: id, title: title, state: state, url: url, created_at: created_at, updated_at: updated_at }
     });
 

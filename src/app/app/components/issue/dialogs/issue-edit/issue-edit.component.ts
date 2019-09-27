@@ -1,22 +1,25 @@
+import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IssueService } from 'src/app/app/services/issue.service';
 
 @Component({
-  selector: 'app-edit.dialog',
-  templateUrl: '../../dialogs/edit/edit.dialog.html',
-  styleUrls: ['../../dialogs/edit/edit.dialog.css']
+  selector: 'app-issue-edit',
+  templateUrl: './issue-edit.component.html',
+  styleUrls: ['./issue-edit.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditIssueComponent {
+export class IssueEditComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<EditIssueComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public dataService: IssueService) { }
+  constructor(public dialogRef: MatDialogRef<IssueEditComponent>,@Inject(MAT_DIALOG_DATA) public data: any, public dataService: IssueService) { }
 
   formControl = new FormControl('', [
     Validators.required
     // Validators.email,
   ]);
+
+  ngOnInit() {
+  }
 
   getErrorMessage() {
     return this.formControl.hasError('required') ? 'Required field' :
@@ -35,4 +38,7 @@ export class EditIssueComponent {
   stopEdit(): void {
     this.dataService.updateIssue(this.data);
   }
+
+  
+
 }
