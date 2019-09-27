@@ -5,39 +5,36 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 
 export class IssueDataSource extends DataSource<Issue> {
-    _filterChange = new BehaviorSubject('');
+    filterChange = new BehaviorSubject('');
     filteredData: Issue[] = [];
     renderedData: Issue[] = [];
 
-    get filter(): string {return this._filterChange.value;}
-    set filter(filter: string) {this._filterChange.next(filter);}
+    get filter(): string {return this.filterChange.value;}
+    set filter(filter: string) {this.filterChange.next(filter);}
 
-    constructor(public _exampleDatabase: IssueService, public _paginator: MatPaginator, public _sort: MatSort) {
+    constructor(public issueService: IssueService, public paginator: MatPaginator, public sort: MatSort) {
         super();
-        this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
+        this.filterChange.subscribe(() => this.paginator.pageIndex = 0);
     }
 
     connect(): Observable<Issue[]> {
         const displayDataChanges = [
-            this._exampleDatabase.dataChange,
-            this._sort.sortChange,
-            this._filterChange,
-            this._paginator.page
+            this.issueService.dataChange,
+            this.sort.sortChange,
+            this.filterChange,
+            this.paginator.page
         ];
 
-        this._exampleDatabase.getAllIssues();
-
-
+        this.issueService.getAllIssues();
         return merge(...displayDataChanges).pipe(map(() => {
-            this.filteredData = this._exampleDatabase.data.slice().filter((issue: Issue) => {
+            this.filteredData = this.issueService.data.slice().filter((issue: Issue) => {
                 const searchStr = (issue.id + issue.title + issue.url + issue.created_at).toLowerCase();
                 return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
             });
 
             const sortedData = this.sortData(this.filteredData.slice());
-
-            const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-            this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
+            const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+            this.renderedData = sortedData.splice(startIndex, this.paginator.pageSize);
             return this.renderedData;
         }
         ));
@@ -46,7 +43,7 @@ export class IssueDataSource extends DataSource<Issue> {
     disconnect() { }
 
     sortData(data: Issue[]): Issue[] {
-        if (!this._sort.active || this._sort.direction === '') {
+        if (!this.sort.active || this.sort.direction === '') {
             return data;
         }
 
@@ -54,7 +51,7 @@ export class IssueDataSource extends DataSource<Issue> {
             let propertyA: number | string = '';
             let propertyB: number | string = '';
 
-            switch (this._sort.active) {
+            switch (this.sort.active) {
                 case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
                 case 'title': [propertyA, propertyB] = [a.title, b.title]; break;
                 case 'state': [propertyA, propertyB] = [a.state, b.state]; break;
@@ -66,7 +63,7 @@ export class IssueDataSource extends DataSource<Issue> {
             const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
             const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 
-            return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
+            return (valueA < valueB ? -1 : 1) * (this.sort.direction === 'asc' ? 1 : -1);
         });
     }
 }

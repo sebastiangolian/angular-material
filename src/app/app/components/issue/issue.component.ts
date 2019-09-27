@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IssueService, Issue } from '../../services/issue.service';
 import { MatDialog, MatPaginator, MatSort } from '@angular/material';
-import { fromEvent, BehaviorSubject, Observable, merge } from 'rxjs';
-import { DataSource } from '@angular/cdk/table';
+import { fromEvent} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { IssueAddComponent } from './dialogs/issue-add/issue-add.component';
 import { IssueEditComponent } from './dialogs/issue-edit/issue-edit.component';
 import { IssueDeleteComponent } from './dialogs/issue-delete/issue-delete.component';
@@ -27,7 +25,7 @@ export class IssueComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('filter', { static: true }) filter: ElementRef;
 
-  constructor(public httpClient: HttpClient, public dialog: MatDialog, public dataService: IssueService) { }
+  constructor(public httpClient: HttpClient, public dialog: MatDialog, public issueService: IssueService) { }
 
   ngOnInit() {
     this.loadData();
@@ -44,7 +42,7 @@ export class IssueComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+        this.exampleDatabase.dataChange.value.push(this.issueService.getDialogData());
         this.refreshTable();
       }
     });
@@ -60,7 +58,7 @@ export class IssueComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+        this.exampleDatabase.dataChange.value[foundIndex] = this.issueService.getDialogData();
         this.refreshTable();
       }
     });
