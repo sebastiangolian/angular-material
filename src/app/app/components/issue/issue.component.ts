@@ -22,13 +22,11 @@ export class IssueComponent implements OnInit {
   index: number;
   id: number;
 
-  constructor(public httpClient: HttpClient,
-              public dialog: MatDialog,
-              public dataService: IssueService) {}
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild('filter', { static: true }) filter: ElementRef;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild('filter',  {static: true}) filter: ElementRef;
+  constructor(public httpClient: HttpClient, public dialog: MatDialog, public dataService: IssueService) { }
 
   ngOnInit() {
     this.loadData();
@@ -40,13 +38,11 @@ export class IssueComponent implements OnInit {
 
   addNew(issue: Issue) {
     const dialogRef = this.dialog.open(AddIssueComponent, {
-      data: {issue: issue }
+      data: { issue: issue }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        // For add we're just pushing a new row inside IssueService
         this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
         this.refreshTable();
       }
@@ -55,20 +51,16 @@ export class IssueComponent implements OnInit {
 
   startEdit(i: number, id: number, title: string, state: string, url: string, created_at: string, updated_at: string) {
     this.id = id;
-    // index row is used just for debugging proposes and can be removed
     this.index = i;
     console.log(this.index);
     const dialogRef = this.dialog.open(EditIssueComponent, {
-      data: {id: id, title: title, state: state, url: url, created_at: created_at, updated_at: updated_at}
+      data: { id: id, title: title, state: state, url: url, created_at: created_at, updated_at: updated_at }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        // When using an edit things are little different, firstly we find record inside IssueService by id
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        // Then you update that record using data from dialogData (values you enetered)
         this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
-        // And lastly refresh table
         this.refreshTable();
       }
     });
@@ -78,13 +70,12 @@ export class IssueComponent implements OnInit {
     this.index = i;
     this.id = id;
     const dialogRef = this.dialog.open(DeleteIssueComponent, {
-      data: {id: id, title: title, state: state, url: url}
+      data: { id: id, title: title, state: state, url: url }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        // for delete we use splice in order to remove single object from IssueService
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
       }
@@ -93,30 +84,8 @@ export class IssueComponent implements OnInit {
 
 
   private refreshTable() {
-    // Refreshing table using paginator
-    // Thanks yeager-j for tips
-    // https://github.com/marinantonio/angular-mat-table-crud/issues/12
     this.paginator._changePageSize(this.paginator.pageSize);
   }
-
-
-  /*   // If you don't need a filter or a pagination this can be simplified, you just use code from else block
-    // OLD METHOD:
-    // if there's a paginator active we're using it for refresh
-    if (this.dataSource._paginator.hasNextPage()) {
-      this.dataSource._paginator.nextPage();
-      this.dataSource._paginator.previousPage();
-      // in case we're on last page this if will tick
-    } else if (this.dataSource._paginator.hasPreviousPage()) {
-      this.dataSource._paginator.previousPage();
-      this.dataSource._paginator.nextPage();
-      // in all other cases including active filter we do it like this
-    } else {
-      this.dataSource.filter = '';
-      this.dataSource.filter = this.filter.nativeElement.value;
-    }*/
-
-
 
   public loadData() {
     this.exampleDatabase = new IssueService(this.httpClient);
@@ -148,16 +117,13 @@ export class ExampleDataSource extends DataSource<Issue> {
   renderedData: Issue[] = [];
 
   constructor(public _exampleDatabase: IssueService,
-              public _paginator: MatPaginator,
-              public _sort: MatSort) {
+    public _paginator: MatPaginator,
+    public _sort: MatSort) {
     super();
-    // Reset to the first page when the user changes the filter.
     this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
   }
 
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Issue[]> {
-    // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
       this._sort.sortChange,
@@ -168,28 +134,23 @@ export class ExampleDataSource extends DataSource<Issue> {
     this._exampleDatabase.getAllIssues();
 
 
-    return merge(...displayDataChanges).pipe(map( () => {
-        // Filter data
-        this.filteredData = this._exampleDatabase.data.slice().filter((issue: Issue) => {
-          const searchStr = (issue.id + issue.title + issue.url + issue.created_at).toLowerCase();
-          return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-        });
+    return merge(...displayDataChanges).pipe(map(() => {
+      this.filteredData = this._exampleDatabase.data.slice().filter((issue: Issue) => {
+        const searchStr = (issue.id + issue.title + issue.url + issue.created_at).toLowerCase();
+        return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+      });
 
-        // Sort filtered data
-        const sortedData = this.sortData(this.filteredData.slice());
+      const sortedData = this.sortData(this.filteredData.slice());
 
-        // Grab the page's slice of the filtered sorted data.
-        const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-        this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
-        return this.renderedData;
-      }
+      const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+      this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
+      return this.renderedData;
+    }
     ));
   }
 
-  disconnect() {}
+  disconnect() { }
 
-
-  /** Returns a sorted copy of the database data. */
   sortData(data: Issue[]): Issue[] {
     if (!this._sort.active || this._sort.direction === '') {
       return data;
