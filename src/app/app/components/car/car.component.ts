@@ -30,7 +30,6 @@ export class CarComponent implements OnInit {
 
   ngOnInit() {
     this.carService.subscribe(this.items);
-    console.log(this.items)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 

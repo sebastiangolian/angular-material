@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { IssueAddComponent } from './dialogs/issue-add/issue-add.component';
 import { IssueEditComponent } from './dialogs/issue-edit/issue-edit.component';
 import { IssueDeleteComponent } from './dialogs/issue-delete/issue-delete.component';
+import { IssueDataSource } from './data-source/issue-data-source';
 
 @Component({
   selector: 'app-issue',
@@ -18,7 +19,7 @@ export class IssueComponent implements OnInit {
 
   displayedColumns = ['id', 'title', 'state', 'url', 'created_at', 'updated_at', 'actions'];
   exampleDatabase: IssueService | null;
-  dataSource: ExampleDataSource | null;
+  dataSource: IssueDataSource | null;
   index: number;
   id: number;
 
@@ -52,7 +53,6 @@ export class IssueComponent implements OnInit {
   startEdit(i: number, id: number, title: string, state: string, url: string, created_at: string, updated_at: string) {
     this.id = id;
     this.index = i;
-    console.log(this.index);
     const dialogRef = this.dialog.open(IssueEditComponent, {
       data: { id: id, title: title, state: state, url: url, created_at: created_at, updated_at: updated_at }
     });
@@ -89,7 +89,7 @@ export class IssueComponent implements OnInit {
 
   public loadData() {
     this.exampleDatabase = new IssueService(this.httpClient);
-    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
+    this.dataSource = new IssueDataSource(this.exampleDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
       // .debounceTime(150)
       // .distinctUntilChanged()
@@ -101,79 +101,3 @@ export class IssueComponent implements OnInit {
       });
   }
 }
-
-export class ExampleDataSource extends DataSource<Issue> {
-  _filterChange = new BehaviorSubject('');
-
-  get filter(): string {
-    return this._filterChange.value;
-  }
-
-  set filter(filter: string) {
-    this._filterChange.next(filter);
-  }
-
-  filteredData: Issue[] = [];
-  renderedData: Issue[] = [];
-
-  constructor(public _exampleDatabase: IssueService,
-    public _paginator: MatPaginator,
-    public _sort: MatSort) {
-    super();
-    this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
-  }
-
-  connect(): Observable<Issue[]> {
-    const displayDataChanges = [
-      this._exampleDatabase.dataChange,
-      this._sort.sortChange,
-      this._filterChange,
-      this._paginator.page
-    ];
-
-    this._exampleDatabase.getAllIssues();
-
-
-    return merge(...displayDataChanges).pipe(map(() => {
-      this.filteredData = this._exampleDatabase.data.slice().filter((issue: Issue) => {
-        const searchStr = (issue.id + issue.title + issue.url + issue.created_at).toLowerCase();
-        return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-      });
-
-      const sortedData = this.sortData(this.filteredData.slice());
-
-      const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
-      return this.renderedData;
-    }
-    ));
-  }
-
-  disconnect() { }
-
-  sortData(data: Issue[]): Issue[] {
-    if (!this._sort.active || this._sort.direction === '') {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
-
-      switch (this._sort.active) {
-        case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
-        case 'title': [propertyA, propertyB] = [a.title, b.title]; break;
-        case 'state': [propertyA, propertyB] = [a.state, b.state]; break;
-        case 'url': [propertyA, propertyB] = [a.url, b.url]; break;
-        case 'created_at': [propertyA, propertyB] = [a.created_at, b.created_at]; break;
-        case 'updated_at': [propertyA, propertyB] = [a.updated_at, b.updated_at]; break;
-      }
-
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
-    });
-  }
-}
-
