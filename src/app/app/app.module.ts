@@ -10,6 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { PostComponent } from './components/post/post.component';
 import { CarComponent } from './components/car/car.component';
+import { IssueComponent } from './components/issue/issue.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { CarComponent } from './components/car/car.component';
     AboutComponent,
     PostComponent,
     CarComponent,
+    IssueComponent,
   ],
   imports: [
     BrowserModule,
