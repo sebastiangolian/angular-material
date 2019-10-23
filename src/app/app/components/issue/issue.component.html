@@ -2,7 +2,7 @@
 
   <div class="form">
     <mat-form-field floatPlaceholder="never" color="accent">
-      <input matInput #filter placeholder="Filter issues">
+      <input matInput #filter placeholder="Search...">
     </mat-form-field>
   </div>
 
@@ -39,17 +39,17 @@
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" (click)="addNew()">
-          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        <button mat-icon-button color="primary" (click)="add()">
+          <mat-icon aria-label="add">add</mat-icon>
         </button>
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)">
+        <button mat-icon-button color="accent" (click)="edit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
+        <button mat-icon-button color="accent" (click)="delete(i, row.id, row.title, row.state, row.url)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>

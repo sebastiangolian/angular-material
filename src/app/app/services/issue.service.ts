@@ -38,15 +38,15 @@ export class IssueService {
     );
   }
 
-  addIssue(issue: Issue): void {
+  add(issue: Issue): void {
     this.dialogData = issue;
   }
 
-  updateIssue(issue: Issue): void {
+  update(issue: Issue): void {
     this.dialogData = issue;
   }
 
-  deleteIssue(id: number): void {
+  delete(id: number): void {
     console.log(id);
   }
 }

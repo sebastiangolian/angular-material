@@ -36,9 +36,6 @@ export class IssueAddComponent implements OnInit {
   }
 
   public confirmAdd(): void {
-    this.dataService.addIssue(this.data);
+    this.dataService.add(this.data);
   }
-
-
-
 }

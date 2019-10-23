@@ -17,10 +17,9 @@ export class IssueDeleteComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    this.dataService.deleteIssue(this.data.id);
+    this.dataService.delete(this.data.id);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

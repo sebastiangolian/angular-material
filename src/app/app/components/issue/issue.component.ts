@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IssueService, Issue } from '../../services/issue.service';
 import { MatDialog, MatPaginator, MatSort } from '@angular/material';
-import { fromEvent} from 'rxjs';
+import { fromEvent, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IssueAddComponent } from './dialogs/issue-add/issue-add.component';
 import { IssueEditComponent } from './dialogs/issue-edit/issue-edit.component';
@@ -35,10 +35,8 @@ export class IssueComponent implements OnInit {
     this.loadData();
   }
 
-  addNew(issue: Issue) {
-    const dialogRef = this.dialog.open(IssueAddComponent, {
-      data: { issue: issue }
-    });
+  add(issue: Issue) {
+    const dialogRef = this.dialog.open(IssueAddComponent, {data: { issue: issue }});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
@@ -48,7 +46,7 @@ export class IssueComponent implements OnInit {
     });
   }
 
-  startEdit(i: number, id: number, title: string, state: string, url: string, created_at: string, updated_at: string) {
+  edit(i: number, id: number, title: string, state: string, url: string, created_at: string, updated_at: string) {
     this.id = id;
     this.index = i;
     const dialogRef = this.dialog.open(IssueEditComponent, {
@@ -64,7 +62,7 @@ export class IssueComponent implements OnInit {
     });
   }
 
-  deleteItem(i: number, id: number, title: string, state: string, url: string) {
+  delete(i: number, id: number, title: string, state: string, url: string) {
     this.index = i;
     this.id = id;
     const dialogRef = this.dialog.open(IssueDeleteComponent, {
@@ -80,7 +78,6 @@ export class IssueComponent implements OnInit {
     });
   }
 
-
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
@@ -89,8 +86,6 @@ export class IssueComponent implements OnInit {
     this.exampleDatabase = new IssueService(this.httpClient);
     this.dataSource = new IssueDataSource(this.exampleDatabase, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
-      // .debounceTime(150)
-      // .distinctUntilChanged()
       .subscribe(() => {
         if (!this.dataSource) {
           return;

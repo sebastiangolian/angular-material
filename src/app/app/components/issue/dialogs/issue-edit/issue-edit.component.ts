@@ -36,9 +36,6 @@ export class IssueEditComponent implements OnInit {
   }
 
   stopEdit(): void {
-    this.dataService.updateIssue(this.data);
+    this.dataService.update(this.data);
   }
-
-  
-
 }
