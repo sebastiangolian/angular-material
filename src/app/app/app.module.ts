@@ -14,6 +14,7 @@ import { IssueComponent } from './components/issue/issue.component';
 import { IssueAddComponent } from './components/issue/dialogs/issue-add/issue-add.component';
 import { IssueEditComponent } from './components/issue/dialogs/issue-edit/issue-edit.component';
 import { IssueDeleteComponent } from './components/issue/dialogs/issue-delete/issue-delete.component';
+import { CommitComponent } from './components/commit/commit.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { IssueDeleteComponent } from './components/issue/dialogs/issue-delete/is
     IssueComponent,
     IssueAddComponent,
     IssueEditComponent,
-    IssueDeleteComponent
+    IssueDeleteComponent,
+    CommitComponent
   ],
   imports: [
     BrowserModule,
