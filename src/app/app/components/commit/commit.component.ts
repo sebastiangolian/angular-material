@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class CommitComponent implements OnInit {
 
   displayedColumns = ['node_id', 'sha'];
-  exampleDatabase: CommitService | null;
+  databaseService: CommitService | null;
   dataSource: CommitDataSource | null;
   index: number;
   id: number;
@@ -36,15 +36,17 @@ export class CommitComponent implements OnInit {
   }
 
   public loadData() {
-    this.exampleDatabase = new CommitService(this.httpClient);
-    this.dataSource = new CommitDataSource(this.exampleDatabase, this.paginator, this.sort);
-    fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      });
+    this.databaseService = new CommitService(this.httpClient);
+    this.dataSource = new CommitDataSource(this.databaseService, this.paginator, this.sort);
+    this.filterSubscribe()
   }
 
+  private filterSubscribe() {
+    fromEvent(this.filter.nativeElement, 'keyup')
+      .subscribe(() => {
+        if (this.dataSource) {
+          this.dataSource.filter = this.filter.nativeElement.value;
+        }
+      });
+  }
 }

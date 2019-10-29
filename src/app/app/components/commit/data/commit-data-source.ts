@@ -12,22 +12,22 @@ export class CommitDataSource extends DataSource<Commits> {
     get filter(): string {return this.filterChange.value;}
     set filter(filter: string) {this.filterChange.next(filter);}
 
-    constructor(public issueService: CommitService, public paginator: MatPaginator, public sort: MatSort) {
+    constructor(public commitService: CommitService, public paginator: MatPaginator, public sort: MatSort) {
         super();
         this.filterChange.subscribe(() => this.paginator.pageIndex = 0);
     }
 
     connect(): Observable<Commits[]> {
         const displayDataChanges = [
-            this.issueService.dataChange,
+            this.commitService.dataChange,
             this.sort.sortChange,
             this.filterChange,
             this.paginator.page
         ];
 
-        this.issueService.getAll();
+        this.commitService.getAll();
         return merge(...displayDataChanges).pipe(map(() => {
-            this.filteredData = this.issueService.data.slice().filter((issue: Commits) => {
+            this.filteredData = this.commitService.data.slice().filter((issue: Commits) => {
                 const searchStr = (issue.sha + issue.node_id).toLowerCase();
                 return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
             });
