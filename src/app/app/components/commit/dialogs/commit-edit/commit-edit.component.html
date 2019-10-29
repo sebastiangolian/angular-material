@@ -1,0 +1,25 @@
+<div class="container">
+    <h3 mat-dialog-title>Commit node_id: {{data.node_id}}</h3>
+
+    <form class="mat-dialog-content" #formControl="ngForm">
+
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput #input class="form-control" placeholder="node_id" [(ngModel)]="data.node_id" name="node_id" required>
+                <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form">
+            <mat-form-field color="accent">
+                <textarea matInput #input class="form-control" placeholder="sha" [(ngModel)]="data.sha" name="sha" required></textarea>
+                <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
+            <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+        </div>
+    </form>
+</div>

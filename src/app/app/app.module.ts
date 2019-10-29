@@ -15,6 +15,9 @@ import { IssueAddComponent } from './components/issue/dialogs/issue-add/issue-ad
 import { IssueEditComponent } from './components/issue/dialogs/issue-edit/issue-edit.component';
 import { IssueDeleteComponent } from './components/issue/dialogs/issue-delete/issue-delete.component';
 import { CommitComponent } from './components/commit/commit.component';
+import { CommitAddComponent } from './components/commit/dialogs/commit-add/commit-add.component';
+import { CommitEditComponent } from './components/commit/dialogs/commit-edit/commit-edit.component';
+import { CommitDeleteComponent } from './components/commit/dialogs/commit-delete/commit-delete.component';
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import { CommitComponent } from './components/commit/commit.component';
     IssueAddComponent,
     IssueEditComponent,
     IssueDeleteComponent,
-    CommitComponent
+    CommitComponent,
+    CommitAddComponent,
+    CommitEditComponent,
+    CommitDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +83,7 @@ import { CommitComponent } from './components/commit/commit.component';
   ],
   bootstrap: [
     AppComponent
-  ]
+  ],
+  entryComponents: [CommitEditComponent]
 })
 export class AppModule { }

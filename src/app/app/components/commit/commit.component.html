@@ -22,17 +22,35 @@
       <mat-cell *matCellDef="let row"> {{row.sha}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="add()">
+          <mat-icon aria-label="add">add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" (click)="edit(i, row)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" (click)="delete(i, row)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
     <!-- ROWS-->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 
-  <!-- NO RESULTS -->  
+  <!-- NO RESULTS -->
   <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
     No results
   </div>
 
-  <!-- PAGINATOR -->  
+  <!-- PAGINATOR -->
   <mat-paginator #paginator length="dataSource.filteredData.length" pageIndex="0" pageSize="10"
     [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
