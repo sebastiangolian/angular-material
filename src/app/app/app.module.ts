@@ -10,10 +10,6 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { PostComponent } from './components/post/post.component';
 import { CarComponent } from './components/car/car.component';
-import { IssueComponent } from './components/issue/issue.component';
-import { IssueAddComponent } from './components/issue/dialogs/issue-add/issue-add.component';
-import { IssueEditComponent } from './components/issue/dialogs/issue-edit/issue-edit.component';
-import { IssueDeleteComponent } from './components/issue/dialogs/issue-delete/issue-delete.component';
 import { CommitComponent } from './components/commit/commit.component';
 import { CommitAddComponent } from './components/commit/dialog/commit-add/commit-add.component';
 import { CommitEditComponent } from './components/commit/dialog/commit-edit/commit-edit.component';
@@ -27,10 +23,6 @@ import { CommitDeleteComponent } from './components/commit/dialog/commit-delete/
     AboutComponent,
     PostComponent,
     CarComponent,
-    IssueComponent,
-    IssueAddComponent,
-    IssueEditComponent,
-    IssueDeleteComponent,
     CommitComponent,
     CommitAddComponent,
     CommitEditComponent,
