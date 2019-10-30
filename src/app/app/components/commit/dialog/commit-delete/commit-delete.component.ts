@@ -12,14 +12,13 @@ export class CommitDeleteComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CommitDeleteComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public dataService: CommitService) { }
 
-  onNoClick(): void {
+  ngOnInit() {}
+
+  onCancel(): void {
     this.dialogRef.close();
   }
 
-  confirmDelete(): void {
+  onDelete(): void {
     this.dataService.delete(this.data.id);
   }
-
-  ngOnInit() {}
-
 }

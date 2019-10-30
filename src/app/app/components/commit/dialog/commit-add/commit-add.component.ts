@@ -11,31 +11,20 @@ import { Commits, CommitService } from '../../service/commit.service';
 })
 export class CommitAddComponent implements OnInit {
 
+  formControl = new FormControl('', [Validators.required]);
   constructor(public dialogRef: MatDialogRef<IssueAddComponent>, @Inject(MAT_DIALOG_DATA) public data: Commits, public dataService: CommitService) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  public getErrorMessage() {
+    return this.formControl.hasError('required') ? 'Required field' : '';
   }
 
-  formControl = new FormControl('', [
-    Validators.required
-    // Validators.email,
-  ]);
-
-  getErrorMessage() {
-    return this.formControl.hasError('required') ? 'Required field' :
-      this.formControl.hasError('email') ? 'Not a valid email' :
-        '';
-  }
-
-  submit() {
-    // emppty stuff
-  }
-
-  onNoClick(): void {
+  public onCancel(): void {
     this.dialogRef.close();
   }
 
-  public confirmAdd(): void {
+  public onSave(): void {
     this.dataService.add(this.data);
   }
 
