@@ -17,9 +17,9 @@ export class CarDataSource extends DataSource<Car> {
         this.filterChange.subscribe(() => this.paginator.pageIndex = 0);
     }
 
-    connect(): Observable<Car[]> {
+    connect(): Observable<Car[]> {        
         const displayDataChanges = [
-            this.carService.data,
+            this.carService.dataChange,
             this.sort.sortChange,
             this.filterChange,
             this.paginator.page
@@ -28,7 +28,7 @@ export class CarDataSource extends DataSource<Car> {
         this.carService.getAll();
         return merge(...displayDataChanges).pipe(map(() => {
             this.filteredData = this.carService.data.slice().filter((car: Car) => {
-                const searchStr = (car.name + car.color + car.id).toLowerCase();
+                const searchStr = (car.name + car.color).toLowerCase();
                 return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
             });
 
@@ -52,9 +52,8 @@ export class CarDataSource extends DataSource<Car> {
             let propertyB: number | string = '';
 
             switch (this.sort.active) {
-                case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
-                case 'color': [propertyA, propertyB] = [a.color, b.color]; break;
                 case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
+                case 'color': [propertyA, propertyB] = [a.color, b.color]; break;
             }
 
             const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

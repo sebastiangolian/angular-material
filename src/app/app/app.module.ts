@@ -14,6 +14,9 @@ import { CommitComponent } from './components/commit/commit.component';
 import { CommitAddComponent } from './components/commit/dialog/commit-add/commit-add.component';
 import { CommitEditComponent } from './components/commit/dialog/commit-edit/commit-edit.component';
 import { CommitDeleteComponent } from './components/commit/dialog/commit-delete/commit-delete.component';
+import { CarAddComponent } from './components/car/dialog/car-add/car-add.component';
+import { CarEditComponent } from './components/car/dialog/car-edit/car-edit.component';
+import { CarDeleteComponent } from './components/car/dialog/car-delete/car-delete.component';
 
 
 @NgModule({
@@ -26,7 +29,10 @@ import { CommitDeleteComponent } from './components/commit/dialog/commit-delete/
     CommitComponent,
     CommitAddComponent,
     CommitEditComponent,
-    CommitDeleteComponent
+    CommitDeleteComponent,
+    CarAddComponent,
+    CarEditComponent,
+    CarDeleteComponent
   ],
   imports: [
     BrowserModule,

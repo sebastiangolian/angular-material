@@ -1,84 +1,49 @@
 import { Injectable } from '@angular/core';
-import { Cars } from '../data/car.data';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observer } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 
-export interface Car {
-  id: number;
+export class Car {
   name: string;
   color: string;
 }
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
 
-  private storageName: string = 'cars'
-  private items: Car[] = []
-  private nextId = 0
-  public subject = new BehaviorSubject<Car[]>([]);
+  private readonly API_URL = 'https://api.github.com/repos/sebastiangolian/angular-material/commits';
 
-  constructor(public http: HttpClient) {
-    this.items = JSON.parse(localStorage.getItem(this.storageName)) || [];
-    for (const item of this.items) {
-      if (item.id >= this.nextId) this.nextId = item.id + 1;
-    }
+  dataChange: BehaviorSubject<Car[]> = new BehaviorSubject<Car[]>([]);
+  dialogData: any;
 
-    if (this.items.length == 0) {
-      this.items = Cars
-    }
-
-    this._update();
-  }
+  constructor(private httpClient: HttpClient) { }
 
   get data(): Car[] {
-    return this.subject.value;
+    return this.dataChange.value;
   }
 
-  subscribe(observer: Observer<Car[]>) {
-    this.subject.subscribe(observer);
+  getDialogData() {
+    return this.dialogData;
   }
 
-  get(id: number): Car {
-    const index = this._find(id);
-    return this.items[index];
+  getAll(): void {
+    this.httpClient.get<Car[]>(this.API_URL).subscribe(
+      (data) => this.dataChange.next(data),
+      (error: HttpErrorResponse) => console.log(error.name + ' ' + error.message)
+    );
   }
 
-  getAll(): Car[] {
-    return this.items;
+  add(car: Car): void {
+    this.dialogData = car;
   }
 
-  add(name: string, color: string): Car {
-    const item = { id: this.nextId++, name, color };
-    this.items.push(item);
-    this._update();
-    return item;
+  update(car: Car): void {
+    this.dialogData = car;
   }
 
-  update(id: number, name: string, color: string) {
-    const index = this._find(id);
-    this.items[index] = { id, name, color };
-    this._update();
-  }
-
-  delete(id: number) {
-    const index = this._find(id);
-    this.items.splice(index, 1);
-    this._update();
-  }
-
-  private _update() {
-    localStorage.setItem(this.storageName, JSON.stringify(this.items));
-    this.subject.next(this.items.map(
-      item => ({ id: item.id, name: item.name, color: item.color})
-    ));
-  }
-
-  private _find(id: number): number {
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].id === id) return i;
-    }
-    throw new Error(`Record with id ${id} was not found!`);
+  delete(id: number): void {
+    console.log(id);
   }
 }
