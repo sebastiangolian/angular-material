@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CommitService } from 'src/app/app/services/commit.service';
+import { CommitService } from '../../service/commit.service';
 
 @Component({
   selector: 'app-commit-delete',

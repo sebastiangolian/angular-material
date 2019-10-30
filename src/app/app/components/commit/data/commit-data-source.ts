@@ -1,8 +1,8 @@
 import { DataSource } from '@angular/cdk/table';
-import { CommitService, Commits } from 'src/app/app/services/commit.service';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
+import { Commits, CommitService } from '../service/commit.service';
 
 export class CommitDataSource extends DataSource<Commits> {
     filterChange = new BehaviorSubject('');

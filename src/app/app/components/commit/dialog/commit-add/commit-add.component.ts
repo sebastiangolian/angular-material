@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { IssueAddComponent } from '../../../issue/dialogs/issue-add/issue-add.component';
 import { FormControl, Validators } from '@angular/forms';
-import { CommitService, Commits } from 'src/app/app/services/commit.service';
+import { Commits, CommitService } from '../../service/commit.service';
 
 @Component({
   selector: 'app-commit-add',

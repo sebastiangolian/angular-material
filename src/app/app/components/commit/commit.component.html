@@ -22,18 +22,22 @@
       <mat-cell *matCellDef="let row"> {{row.sha}}</mat-cell>
     </ng-container>
 
+    <!-- ACTIONS -->
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
+        <!-- ADD -->
         <button mat-icon-button color="primary" (click)="add()">
           <mat-icon aria-label="add">add</mat-icon>
         </button>
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let i=index;">
+        <!-- EDIT -->
         <button mat-icon-button color="accent" (click)="edit(i, row)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
+        <!-- DELETE -->
         <button mat-icon-button color="accent" (click)="delete(i, row)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>

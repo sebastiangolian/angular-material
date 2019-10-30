@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { CommitService, Commits } from '../../services/commit.service';
 import { CommitDataSource } from './data/commit-data-source';
 import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { CommitAddComponent } from './dialogs/commit-add/commit-add.component';
-import { CommitEditComponent } from './dialogs/commit-edit/commit-edit.component';
-import { CommitDeleteComponent } from './dialogs/commit-delete/commit-delete.component';
+import { CommitAddComponent } from './dialog/commit-add/commit-add.component';
+import { CommitEditComponent } from './dialog/commit-edit/commit-edit.component';
+import { CommitDeleteComponent } from './dialog/commit-delete/commit-delete.component';
+import { CommitService, Commits } from './service/commit.service';
 
 @Component({
   templateUrl: './commit.component.html',

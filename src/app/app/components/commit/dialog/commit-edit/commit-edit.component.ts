@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CommitService } from 'src/app/app/services/commit.service';
 import { FormControl, Validators } from '@angular/forms';
+import { CommitService } from '../../service/commit.service';
 
 @Component({
   templateUrl: './commit-edit.component.html',

@@ -15,9 +15,9 @@ import { IssueAddComponent } from './components/issue/dialogs/issue-add/issue-ad
 import { IssueEditComponent } from './components/issue/dialogs/issue-edit/issue-edit.component';
 import { IssueDeleteComponent } from './components/issue/dialogs/issue-delete/issue-delete.component';
 import { CommitComponent } from './components/commit/commit.component';
-import { CommitAddComponent } from './components/commit/dialogs/commit-add/commit-add.component';
-import { CommitEditComponent } from './components/commit/dialogs/commit-edit/commit-edit.component';
-import { CommitDeleteComponent } from './components/commit/dialogs/commit-delete/commit-delete.component';
+import { CommitAddComponent } from './components/commit/dialog/commit-add/commit-add.component';
+import { CommitEditComponent } from './components/commit/dialog/commit-edit/commit-edit.component';
+import { CommitDeleteComponent } from './components/commit/dialog/commit-delete/commit-delete.component';
 
 
 @NgModule({
