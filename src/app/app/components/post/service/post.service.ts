@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observer } from 'rxjs';
-import { Posts } from 'src/app/app/data/post.data';
 import { Sort } from '@angular/material';
+import { Posts } from '../data/post.data';
 
 export interface Post {
   id: number;

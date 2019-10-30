@@ -4,14 +4,12 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { PostComponent } from './components/post/post.component';
 import { CarComponent } from './components/car/car.component';
-import { IssueComponent } from './components/issue/issue.component';
 import { CommitComponent } from './components/commit/commit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'cars', component: CarComponent },
   { path: 'posts', component: PostComponent },
-  { path: 'issues', component: IssueComponent },
   { path: 'commit', component: CommitComponent },
   { path: 'about', component: AboutComponent },
   { path: 'logout', component: HomeComponent }

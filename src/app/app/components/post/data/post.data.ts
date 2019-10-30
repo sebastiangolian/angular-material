@@ -1,4 +1,4 @@
-import { Post } from '../services/post.service';
+import { Post } from '../service/post.service';
 
 export const Posts: Post[] = [
     {

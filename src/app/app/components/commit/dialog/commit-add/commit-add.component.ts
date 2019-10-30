@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IssueAddComponent } from '../../../issue/dialogs/issue-add/issue-add.component';
 import { FormControl, Validators } from '@angular/forms';
 import { Commits, CommitService } from '../../service/commit.service';
 
@@ -12,7 +11,7 @@ import { Commits, CommitService } from '../../service/commit.service';
 export class CommitAddComponent implements OnInit {
 
   formControl = new FormControl('', [Validators.required]);
-  constructor(public dialogRef: MatDialogRef<IssueAddComponent>, @Inject(MAT_DIALOG_DATA) public data: Commits, public dataService: CommitService) { }
+  constructor(public dialogRef: MatDialogRef<CommitAddComponent>, @Inject(MAT_DIALOG_DATA) public data: Commits, public dataService: CommitService) { }
 
   ngOnInit() {}
 

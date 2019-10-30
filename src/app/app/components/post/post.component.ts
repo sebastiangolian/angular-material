@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Post, PostService } from '../../services/post.service';
 import { Sort } from '@angular/material/sort';
+import { Post, PostService } from './service/post.service';
 
 @Component({
   selector: 'app-post',
