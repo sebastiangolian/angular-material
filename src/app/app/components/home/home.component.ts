@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CarService } from '../car/service/car.service';
+import { CommitService } from '../commit/service/commit.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +10,7 @@ import { Component } from '@angular/core';
 export class HomeComponent {
   model: any;
 
-  constructor() {
-   
+  constructor(public carService: CarService, public commitService: CommitService) {
+
   }
 }

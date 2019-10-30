@@ -17,7 +17,7 @@ export class CarService {
   private storageName: string = 'cars'
   private items: Car[] = []
   private nextId = 0
-  private subject = new BehaviorSubject<Car[]>([]);
+  public subject = new BehaviorSubject<Car[]>([]);
 
   constructor(public http: HttpClient) {
     this.items = JSON.parse(localStorage.getItem(this.storageName)) || [];
@@ -30,6 +30,10 @@ export class CarService {
     }
 
     this._update();
+  }
+
+  get data(): Car[] {
+    return this.subject.value;
   }
 
   subscribe(observer: Observer<Car[]>) {

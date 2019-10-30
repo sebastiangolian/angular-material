@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Car, CarService } from './service/car.service';
+import { CarDataSource } from './data/car-data-source';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-car',
@@ -14,7 +16,8 @@ import { Car, CarService } from './service/car.service';
 export class CarComponent implements OnInit {
   items = new BehaviorSubject<Car[]>([]);
   currentItem: Car = { id: -1, name: '', color: ''};
-  dataSource: MatTableDataSource<Car>;
+  databaseService: CarService | null;
+  dataSource: CarDataSource | null;
   editForm: FormGroup;
   isCreate = false;
   isEdit = false;
@@ -22,21 +25,27 @@ export class CarComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private formBuilder: FormBuilder, private carService: CarService) {
-    //this.carService.subscribe(this.items);
-    this.dataSource = new MatTableDataSource(this.carService.getAll());
-    this.dataSource = new MatTableDataSource(this.carService.getAll());
-  }
+  constructor(public httpClient: HttpClient, private formBuilder: FormBuilder, private carService: CarService) {}
 
   ngOnInit() {
-    this.carService.subscribe(this.items);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-
+    this.loadData();
     this.editForm = this.formBuilder.group({
       name: ['', Validators.required],
       color: ['', Validators.required]
     });
+  }
+
+  refresh() {
+    this.loadData();
+  }
+
+  private refreshTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
+
+  public loadData() {
+    this.databaseService = new CarService(this.httpClient);
+    this.dataSource = new CarDataSource(this.databaseService, this.paginator, this.sort);
   }
 
   onSelect(id: number) {
@@ -66,6 +75,8 @@ export class CarComponent implements OnInit {
     this.carService.delete(this.currentItem.id);
     this.currentItem = { id: -1, name: '', color: '' };
     this.isEdit = false;
+
+    this.refreshTable();
   }
 
   onUpdate() {
@@ -80,6 +91,8 @@ export class CarComponent implements OnInit {
       this.currentItem = {id, name, color};
     }
     this.isEdit = false;
+
+    this.refreshTable();
   }
 
   onCancel() {

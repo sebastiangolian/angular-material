@@ -40,12 +40,12 @@ export class CommitService {
     );
   }
 
-  add(issue: Commits): void {
-    this.dialogData = issue;
+  add(commit: Commits): void {
+    this.dialogData = commit;
   }
 
-  update(issue: Commits): void {
-    this.dialogData = issue;
+  update(commit: Commits): void {
+    this.dialogData = commit;
   }
 
   delete(id: number): void {

@@ -2,33 +2,33 @@ import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
-import { Commits, CommitService } from '../service/commit.service';
+import { Car, CarService } from '../service/car.service';
 
-export class CommitDataSource extends DataSource<Commits> {
+export class CarDataSource extends DataSource<Car> {
     filterChange = new BehaviorSubject('');
-    filteredData: Commits[] = [];
-    renderedData: Commits[] = [];
+    filteredData: Car[] = [];
+    renderedData: Car[] = [];
 
     get filter(): string {return this.filterChange.value;}
     set filter(filter: string) {this.filterChange.next(filter);}
 
-    constructor(public commitService: CommitService, public paginator: MatPaginator, public sort: MatSort) {
+    constructor(public carService: CarService, public paginator: MatPaginator, public sort: MatSort) {
         super();
         this.filterChange.subscribe(() => this.paginator.pageIndex = 0);
     }
 
-    connect(): Observable<Commits[]> {        
+    connect(): Observable<Car[]> {
         const displayDataChanges = [
-            this.commitService.dataChange,
+            this.carService.data,
             this.sort.sortChange,
             this.filterChange,
             this.paginator.page
         ];
 
-        this.commitService.getAll();
+        this.carService.getAll();
         return merge(...displayDataChanges).pipe(map(() => {
-            this.filteredData = this.commitService.data.slice().filter((commit: Commits) => {
-                const searchStr = (commit.sha + commit.node_id).toLowerCase();
+            this.filteredData = this.carService.data.slice().filter((car: Car) => {
+                const searchStr = (car.name + car.color + car.id).toLowerCase();
                 return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
             });
 
@@ -42,7 +42,7 @@ export class CommitDataSource extends DataSource<Commits> {
 
     disconnect() { }
 
-    sortData(data: Commits[]): Commits[] {
+    sortData(data: Car[]): Car[] {
         if (!this.sort.active || this.sort.direction === '') {
             return data;
         }
@@ -52,8 +52,9 @@ export class CommitDataSource extends DataSource<Commits> {
             let propertyB: number | string = '';
 
             switch (this.sort.active) {
-                case 'sha': [propertyA, propertyB] = [a.sha, b.sha]; break;
-                case 'node_id': [propertyA, propertyB] = [a.node_id, b.node_id]; break;
+                case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
+                case 'color': [propertyA, propertyB] = [a.color, b.color]; break;
+                case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
             }
 
             const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
