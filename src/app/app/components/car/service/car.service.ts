@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 export class Car {
   name: string;
   color: string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
 
-  private readonly API_URL = 'https://api.github.com/repos/sebastiangolian/angular-material/commits';
+  private readonly DATA_URL = 'assets/cars.json'
 
   dataChange: BehaviorSubject<Car[]> = new BehaviorSubject<Car[]>([]);
   dialogData: any;
@@ -29,7 +28,7 @@ export class CarService {
   }
 
   getAll(): void {
-    this.httpClient.get<Car[]>(this.API_URL).subscribe(
+    this.httpClient.get<Car[]>(this.DATA_URL).subscribe(
       (data) => this.dataChange.next(data),
       (error: HttpErrorResponse) => console.log(error.name + ' ' + error.message)
     );
