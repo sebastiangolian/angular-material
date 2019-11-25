@@ -43,6 +43,6 @@ export class CarService {
   }
 
   delete(id: number): void {
-    console.log(id);
+
   }
 }

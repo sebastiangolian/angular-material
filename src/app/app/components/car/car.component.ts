@@ -44,10 +44,8 @@ export class CarComponent implements OnInit {
     this.filterSubscribe()
   }
 
-  
   add(car: Car) {
     const dialogRef = this.dialog.open(CarAddComponent, {data: { car: car }});
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.databaseService.dataChange.value.push(this.carService.getDialogData());
@@ -87,7 +85,6 @@ export class CarComponent implements OnInit {
       }
     });
   }
-
 
   private filterSubscribe() {
     fromEvent(this.filter.nativeElement, 'keyup')
