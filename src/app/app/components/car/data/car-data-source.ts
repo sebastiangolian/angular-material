@@ -28,7 +28,7 @@ export class CarDataSource extends DataSource<Car> {
         this.carService.getAll();
         return merge(...displayDataChanges).pipe(map(() => {
             this.filteredData = this.carService.data.slice().filter((car: Car) => {
-                const searchStr = (car.name + car.color).toLowerCase();
+                const searchStr = (car.name + car.country).toLowerCase();
                 return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
             });
 
@@ -52,8 +52,9 @@ export class CarDataSource extends DataSource<Car> {
             let propertyB: number | string = '';
 
             switch (this.sort.active) {
+                case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
                 case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
-                case 'color': [propertyA, propertyB] = [a.color, b.color]; break;
+                case 'country': [propertyA, propertyB] = [a.country, b.country]; break;
             }
 
             const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

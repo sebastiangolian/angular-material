@@ -1,11 +1,18 @@
 <div class="container">
-    <h3 mat-dialog-title>Commit color: {{data.color}}</h3>
+    <h3 mat-dialog-title>Commit car: {{data.name}}</h3>
 
     <form class="mat-dialog-content" #formControl="ngForm">
 
         <div class="form">
             <mat-form-field color="accent">
-                <input matInput #input class="form-control" placeholder="color" [(ngModel)]="data.color" name="color" required>
+                <input matInput #input class="form-control" placeholder="id" [(ngModel)]="data.id" name="id" disabled required>
+                <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput #input class="form-control" placeholder="country" [(ngModel)]="data.country" name="country" required>
                 <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
         </div>

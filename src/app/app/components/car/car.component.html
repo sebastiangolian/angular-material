@@ -10,16 +10,23 @@
   <!-- TABLE -->
   <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
 
+     <!-- ID-->
+     <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>id</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}}</mat-cell>
+    </ng-container>
+
+
     <!-- NAME-->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>name</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
     </ng-container>
 
-    <!-- COLOR-->
-    <ng-container matColumnDef="color">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>color</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.color}}</mat-cell>
+    <!-- COUNTRY-->
+    <ng-container matColumnDef="country">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>country</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.country}}</mat-cell>
     </ng-container>
 
     <!-- ACTIONS -->
@@ -33,12 +40,12 @@
 
       <mat-cell *matCellDef="let row; let i=index;">
         <!-- EDIT -->
-        <button mat-icon-button color="accent" (click)="edit(i, row)">
+        <button mat-icon-button color="accent" (click)="edit(row)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
         <!-- DELETE -->
-        <button mat-icon-button color="accent" (click)="delete(i, row)">
+        <button mat-icon-button color="accent" (click)="delete(row)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>

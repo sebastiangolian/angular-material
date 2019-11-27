@@ -3,8 +3,9 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 export class Car {
+  id: number;
   name: string;
-  color: string;
+  country: string;
 }
 
 @Injectable({
@@ -40,9 +41,5 @@ export class CarService {
 
   update(car: Car): void {
     this.dialogData = car;
-  }
-
-  delete(id: number): void {
-
   }
 }

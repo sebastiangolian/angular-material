@@ -14,10 +14,9 @@ import { CarDeleteComponent } from './dialog/car-delete/car-delete.component';
 })
 export class CarComponent implements OnInit {
 
-  displayedColumns = ['name', 'color', 'actions'];
+  displayedColumns = ['id','name', 'country', 'actions'];
   databaseService: CarService | null;
   dataSource: CarDataSource | null;
-  index: number;
   id: string;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -54,32 +53,30 @@ export class CarComponent implements OnInit {
     });
   }
 
-  edit(i: number, row: Car) {
-    this.index = i;
-    this.id = row.color;
+  edit(row: Car) {
     const dialogRef = this.dialog.open(CarEditComponent, {
-      data: {name: row.name, color: row.color}
+      data: {id: row.id, name: row.name, country: row.country}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.databaseService.dataChange.value.findIndex(x => x.color === this.id);
+        const foundIndex = this.databaseService.dataChange.value.findIndex(x => x.id === row.id);
         this.databaseService.dataChange.value[foundIndex] = this.carService.getDialogData();
+        this.databaseService.dataChange.value[foundIndex].id = row.id;
         this.refreshTable();
       }
     });
   }
 
-  delete(i: number, row: Car) {
-    this.index = i;
-    this.id = row.color;
+  delete(row: Car) {
+    this.id = row.country;
     const dialogRef = this.dialog.open(CarDeleteComponent, {
-      data: { color: row.color, name: row.name}
+      data: {id: row.id, country: row.country, name: row.name}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.databaseService.dataChange.value.findIndex(x => x.color === this.id);
+        const foundIndex = this.databaseService.dataChange.value.findIndex(x => x.country === this.id);
         this.databaseService.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
       }
