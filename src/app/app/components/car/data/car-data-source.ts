@@ -28,7 +28,7 @@ export class CarDataSource extends DataSource<Car> {
         this.carService.getAll();
         return merge(...displayDataChanges).pipe(map(() => {
             this.filteredData = this.carService.data.slice().filter((car: Car) => {
-                const searchStr = (car.name + car.country).toLowerCase();
+                const searchStr = (car.id + car.name + car.country).toLowerCase();
                 return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
             });
 
