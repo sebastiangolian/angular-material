@@ -17,7 +17,6 @@ export class CarComponent implements OnInit {
   displayedColumns = ['id','name', 'country', 'actions'];
   databaseService: CarService | null;
   dataSource: CarDataSource | null;
-  id: string;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -69,14 +68,13 @@ export class CarComponent implements OnInit {
   }
 
   delete(row: Car) {
-    this.id = row.country;
     const dialogRef = this.dialog.open(CarDeleteComponent, {
       data: {id: row.id, country: row.country, name: row.name}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.databaseService.dataChange.value.findIndex(x => x.country === this.id);
+        const foundIndex = this.databaseService.dataChange.value.findIndex(x => x.id === row.id);
         this.databaseService.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
       }
