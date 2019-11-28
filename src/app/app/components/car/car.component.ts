@@ -46,6 +46,8 @@ export class CarComponent implements OnInit {
     const dialogRef = this.dialog.open(CarAddComponent, {data: { car: car }});
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
+        let nextId = this.databaseService.dataChange.value[this.databaseService.dataChange.value.length-1].id + 1;
+        this.carService.getDialogData().id = nextId
         this.databaseService.dataChange.value.push(this.carService.getDialogData());
         this.refreshTable();
       }
