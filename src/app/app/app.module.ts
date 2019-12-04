@@ -10,10 +10,6 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { PostComponent } from './components/post/post.component';
 import { CarComponent } from './components/car/car.component';
-import { CommitComponent } from './components/commit/commit.component';
-import { CommitAddComponent } from './components/commit/dialog/commit-add/commit-add.component';
-import { CommitEditComponent } from './components/commit/dialog/commit-edit/commit-edit.component';
-import { CommitDeleteComponent } from './components/commit/dialog/commit-delete/commit-delete.component';
 import { CarAddComponent } from './components/car/dialog/car-add/car-add.component';
 import { CarEditComponent } from './components/car/dialog/car-edit/car-edit.component';
 import { CarDeleteComponent } from './components/car/dialog/car-delete/car-delete.component';
@@ -26,10 +22,6 @@ import { CarDeleteComponent } from './components/car/dialog/car-delete/car-delet
     AboutComponent,
     PostComponent,
     CarComponent,
-    CommitComponent,
-    CommitAddComponent,
-    CommitEditComponent,
-    CommitDeleteComponent,
     CarAddComponent,
     CarEditComponent,
     CarDeleteComponent
@@ -82,6 +74,6 @@ import { CarDeleteComponent } from './components/car/dialog/car-delete/car-delet
   bootstrap: [
     AppComponent
   ],
-  entryComponents: [CommitEditComponent]
+  entryComponents: [HomeComponent]
 })
 export class AppModule { }
