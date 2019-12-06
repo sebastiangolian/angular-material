@@ -11,16 +11,16 @@ import { Post, PostService } from './service/post.service';
 })
 export class PostComponent implements OnInit {
   posts = new BehaviorSubject<Post[]>([]);
-  currentPost: Post = { id: -1, title: '', description: '', image: '' };
-  createPost = false;
-  editPost = false;
-  editPostForm: FormGroup;
+  currentItem: Post = { id: -1, title: '', description: '', image: '' };
+  isCreate = false;
+  isEdit = false;
+  formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private postService: PostService) { }
 
   ngOnInit() {
     this.postService.subscribe(this.posts);
-    this.editPostForm = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       image: ['', Validators.required]
@@ -28,53 +28,53 @@ export class PostComponent implements OnInit {
   }
 
   onSelect(id: number) {
-    this.currentPost = this.postService.get(id);
+    this.currentItem = this.postService.get(id);
   }
 
   isSelected(): boolean {
-    return this.currentPost.id >= 0;
+    return this.currentItem.id >= 0;
   }
 
   onAdd() {
-    this.editPostForm.reset();
-    this.createPost = true;
-    this.editPost = true;
+    this.formGroup.reset();
+    this.isCreate = true;
+    this.isEdit = true;
   }
 
   onEdit() {
-    if (this.currentPost.id < 0) return;
-    this.editPostForm.get('title').setValue(this.currentPost.title);
-    this.editPostForm.get('description').setValue(this.currentPost.description);
-    this.editPostForm.get('image').setValue(this.currentPost.image);
-    this.createPost = false;
-    this.editPost = true;
+    if (this.currentItem.id < 0) return;
+    this.formGroup.get('title').setValue(this.currentItem.title);
+    this.formGroup.get('description').setValue(this.currentItem.description);
+    this.formGroup.get('image').setValue(this.currentItem.image);
+    this.isCreate = false;
+    this.isEdit = true;
   }
 
   onDelete() {
-    if (this.currentPost.id < 0) return;
-    this.postService.delete(this.currentPost.id);
-    this.currentPost = { id: -1, title: '', description: '', image: '' };
-    this.editPost = false;
+    if (this.currentItem.id < 0) return;
+    this.postService.delete(this.currentItem.id);
+    this.currentItem = { id: -1, title: '', description: '', image: '' };
+    this.isEdit = false;
   }
 
   onUpdate() {
-    if (!this.editPostForm.valid) return;
-    const title = this.editPostForm.get('title').value;
-    const description = this.editPostForm.get('description').value;
-    const image = this.editPostForm.get('image').value;
-    if (this.createPost) {
-      this.currentPost = this.postService.add(title, description, image);
+    if (!this.formGroup.valid) return;
+    const title = this.formGroup.get('title').value;
+    const description = this.formGroup.get('description').value;
+    const image = this.formGroup.get('image').value;
+    if (this.isCreate) {
+      this.currentItem = this.postService.add(title, description, image);
     } else {
-      const id = this.currentPost.id;
+      const id = this.currentItem.id;
       this.postService.update(id, title, description, image);
-      this.currentPost = { id, title, description, image };
+      this.currentItem = { id, title, description, image };
     }
-    this.editPost = false;
+    this.isEdit = false;
   }
 
   onCancel() {
-    this.currentPost = { id: -1, title: '', description: '', image: '' };
-    this.editPost = false;
+    this.currentItem = { id: -1, title: '', description: '', image: '' };
+    this.isEdit = false;
   }
 
   onFilter(filterValue: string) {

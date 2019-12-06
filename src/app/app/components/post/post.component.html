@@ -1,13 +1,13 @@
-<div *ngIf="!editPost" class="post-container">
+<div *ngIf="!isEdit" class="post-container">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
               Posts
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <p *ngIf="isSelected()">Id: {{currentPost.id}}</p>
-        <p *ngIf="isSelected()">Title: {{currentPost.title}}</p>
-        <p *ngIf="isSelected()">Description: {{currentPost.description}}</p>
+        <p *ngIf="isSelected()">Id: {{currentItem.id}}</p>
+        <p *ngIf="isSelected()">Title: {{currentItem.title}}</p>
+        <p *ngIf="isSelected()">Description: {{currentItem.description}}</p>
         <button mat-raised-button color="primary" (click)="onEdit()" *ngIf="isSelected()">Edit</button>
         <button mat-raised-button color="warn" (click)="onDelete()" *ngIf="isSelected()">Delete</button>
         <button mat-raised-button color="primary" (click)="onCancel()" *ngIf="isSelected()">Cancel</button>
@@ -15,14 +15,14 @@
       </mat-expansion-panel>
   </div>
   
-  <div *ngIf="editPost" class="form-container">
+  <div *ngIf="isEdit" class="form-container">
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Posts
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <form [formGroup]="editPostForm" (ngSubmit)="onUpdate()">
+      <form [formGroup]="formGroup" (ngSubmit)="onUpdate()">
         <mat-form-field class="full-width">
           <input matInput placeholder="Title" formControlName="title">
         </mat-form-field>
