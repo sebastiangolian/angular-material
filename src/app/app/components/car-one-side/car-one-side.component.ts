@@ -13,9 +13,8 @@ import { CarOneSideDataSource } from './data/car-one-side-data-source';
 })
 export class CarOneSideComponent implements OnInit {
 
-  displayedColumns = ['id','name', 'country', 'actions'];
-  currentItem: Car = { id: -1, name: '', country: ''};
-  databaseService: CarOneSideService | null;
+  displayedColumns = ['id','name','country','actions'];
+  currentItem: Car;
   dataSource: CarOneSideDataSource | null;
   formGroup: FormGroup;
   isCreate: boolean = false;
@@ -26,28 +25,24 @@ export class CarOneSideComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('filter', { static: true }) filter: ElementRef;
 
-  constructor(public httpClient: HttpClient, public dialog: MatDialog, public CarOneSideService: CarOneSideService, private formBuilder: FormBuilder) { }
+  constructor(public httpClient: HttpClient, public dialog: MatDialog, private formBuilder: FormBuilder, public carService: CarOneSideService) { }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       name: ['', Validators.required],
       country: ['', Validators.required]
     });
-    this.loadData();
-  }
-
-  refresh() {
-    this.loadData();
+    this.resetCurrentItem();
+    this.dataSource = new CarOneSideDataSource(this.carService, this.paginator, this.sort);
+    this.filterSubscribe()
   }
 
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
-  public loadData() {
-    this.databaseService = new CarOneSideService(this.httpClient);
-    this.dataSource = new CarOneSideDataSource(this.databaseService, this.paginator, this.sort);
-    this.filterSubscribe()
+  private resetCurrentItem() {
+    this.currentItem = { id: -1, name: '', country: ''};
   }
 
   isSelected(): boolean {
@@ -64,7 +59,6 @@ export class CarOneSideComponent implements OnInit {
   onEdit(car: Car) {
     if (car.id < 0) return;
     this.currentItem = car;
-    
     this.formGroup.get('name').setValue(car.name);
     this.formGroup.get('country').setValue(car.country);
     this.isCreate = false;
@@ -74,34 +68,28 @@ export class CarOneSideComponent implements OnInit {
 
   onUpdate() {
     if (!this.formGroup.valid) return;
-    const name = this.formGroup.get('name').value;
-    const country = this.formGroup.get('country').value;
+    this.currentItem.name = this.formGroup.get('name').value;
+    this.currentItem.country = this.formGroup.get('country').value;
     if (this.isCreate) {
-      let nextId = this.databaseService.getSubject().value[this.databaseService.getSubject().value.length-1].id + 1;
-      this.currentItem = {id: nextId, name: name, country: country};
-      this.databaseService.getSubject().value.push(this.currentItem);
+      this.carService.add(this.currentItem);
     } else {
-      this.currentItem.name = name;
-      this.currentItem.country = country;
-      const foundIndex = this.databaseService.getSubject().value.findIndex(x => x.id === this.currentItem.id);
-      this.databaseService.getSubject().value[foundIndex] = this.currentItem;
+      this.carService.update(this.currentItem);
     }
 
-    this.refreshTable()
     this.isModifiy = false;
+    this.refreshTable()
   }
 
   onDelete(car: Car) {
     if (car.id < 0) return;
-    const foundIndex = this.databaseService.getSubject().value.findIndex(x => x.id === car.id);
-    this.databaseService.getSubject().value.splice(foundIndex, 1);
-    this.currentItem = { id: -1, name: '', country: ''};
+    this.carService.delete(car);
+    this.resetCurrentItem();
     this.isModifiy = false;
     this.refreshTable()
   }
 
   onCancel() {
-    this.currentItem = { id: -1, name: '', country: ''};
+    this.resetCurrentItem();
     this.isModifiy = false;
   }
 
@@ -113,5 +101,4 @@ export class CarOneSideComponent implements OnInit {
         }
       });
   }
-
 }

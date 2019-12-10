@@ -16,11 +16,7 @@ export class CarOneSideService {
   constructor(private httpClient: HttpClient) { }
 
   getSubject(): BehaviorSubject<Car[]> {
-    return this.subject;
-  }
-
-  getCurrent() {
-    return this.current;
+    return this.subject
   }
 
   getAll(): void {
@@ -31,14 +27,17 @@ export class CarOneSideService {
   }
 
   add(car: Car): void {
-    this.current = car;
+    car.id = this.subject.value[this.subject.value.length-1].id + 1;
+    this.subject.value.push(car);
   }
 
   update(car: Car): void {
-    this.current = car;
+    const foundIndex = this.subject.value.findIndex(x => x.id === car.id);
+    this.subject.value[foundIndex] = car;
   }
 
   delete(car: Car): void {
-    this.current = null
+    const foundIndex = this.subject.value.findIndex(x => x.id === car.id);
+    this.subject.value.splice(foundIndex, 1);
   }
 }
