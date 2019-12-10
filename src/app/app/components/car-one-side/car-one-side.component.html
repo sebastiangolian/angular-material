@@ -1,3 +1,42 @@
+<div *ngIf="!isModifiy" class="car-container">
+  <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Cars
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p *ngIf="isSelected()">Id: {{currentItem.id}}</p>
+      <p *ngIf="isSelected()">Name: {{currentItem.name}}</p>
+      <p *ngIf="isSelected()">Country: {{currentItem.country}}</p>
+      <button mat-raised-button color="primary" (click)="onEdit(currentItem)" *ngIf="isSelected()">Edit</button>
+      <button mat-raised-button color="warn" (click)="onDelete(currentItem)" *ngIf="isSelected()">Delete</button>
+      <button mat-raised-button color="primary" (click)="onCancel()" *ngIf="isSelected()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="onAdd()" *ngIf="!isSelected()">New</button>
+    </mat-expansion-panel>
+</div>
+
+<div *ngIf="isModifiy" class="form-container">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Cars
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="formGroup" (ngSubmit)="onUpdate()">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="name" formControlName="name">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="country" formControlName="country">
+      </mat-form-field>
+      <div class="full-width row-buttons">
+        <button mat-raised-button color="primary">{{formButtonName}}</button>
+        <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  </mat-expansion-panel>
+</div>
+
 <div class="container mat-elevation-z8">
 
     <!-- SEARCH -->
@@ -33,19 +72,19 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>
           <!-- ADD -->
-          <button mat-icon-button color="primary" (click)="add()">
+          <button mat-icon-button color="primary" (click)="onAdd()">
             <mat-icon aria-label="add">add</mat-icon>
           </button>
         </mat-header-cell>
   
         <mat-cell *matCellDef="let row; let i=index;">
           <!-- EDIT -->
-          <button mat-icon-button color="accent" (click)="edit(row)">
+          <button mat-icon-button color="accent" (click)="onEdit(row)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
   
           <!-- DELETE -->
-          <button mat-icon-button color="accent" (click)="delete(row)">
+          <button mat-icon-button color="accent" (click)="onDelete(row)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
