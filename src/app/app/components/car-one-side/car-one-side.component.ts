@@ -19,7 +19,7 @@ export class CarOneSideComponent implements OnInit {
   formGroup: FormGroup;
   isCreate: boolean = false;
   isModifiy: boolean = false;
-  formButtonName: string = 'Add';
+  formButtonName: string;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -57,6 +57,7 @@ export class CarOneSideComponent implements OnInit {
     this.formGroup.reset();
     this.isCreate = true;
     this.isModifiy = true;
+    this.formButtonName = 'Add';
   }
 
   onEdit(car: Car) {
@@ -67,6 +68,7 @@ export class CarOneSideComponent implements OnInit {
     this.formGroup.get('country').setValue(car.country);
     this.isCreate = false;
     this.isModifiy = true;
+    this.formButtonName = 'Update';
   }
 
   onUpdate() {
