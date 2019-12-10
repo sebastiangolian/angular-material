@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { CarService, Car } from '../car/service/car.service';
-import { CarDataSource } from '../car/data/car-data-source';
+import { Car } from '../car/service/car.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CarOneSideService } from './service/car-one-side.service';
+import { CarOneSideDataSource } from './data/car-one-side-data-source';
 
 @Component({
   templateUrl: './car-one-side.component.html',
@@ -14,8 +15,8 @@ export class CarOneSideComponent implements OnInit {
 
   displayedColumns = ['id','name', 'country', 'actions'];
   currentItem: Car = { id: -1, name: '', country: ''};
-  databaseService: CarService | null;
-  dataSource: CarDataSource | null;
+  databaseService: CarOneSideService | null;
+  dataSource: CarOneSideDataSource | null;
   formGroup: FormGroup;
   isCreate: boolean = false;
   isModifiy: boolean = false;
@@ -25,7 +26,7 @@ export class CarOneSideComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('filter', { static: true }) filter: ElementRef;
 
-  constructor(public httpClient: HttpClient, public dialog: MatDialog, public carService: CarService, private formBuilder: FormBuilder) { }
+  constructor(public httpClient: HttpClient, public dialog: MatDialog, public CarOneSideService: CarOneSideService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
@@ -44,8 +45,8 @@ export class CarOneSideComponent implements OnInit {
   }
 
   public loadData() {
-    this.databaseService = new CarService(this.httpClient);
-    this.dataSource = new CarDataSource(this.databaseService, this.paginator, this.sort);
+    this.databaseService = new CarOneSideService(this.httpClient);
+    this.dataSource = new CarOneSideDataSource(this.databaseService, this.paginator, this.sort);
     this.filterSubscribe()
   }
 
