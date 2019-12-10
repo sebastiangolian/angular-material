@@ -21,3 +21,8 @@ h1{margin: 20px;}
 .mat-expansion-panel{margin:10px;width:60%;}
 button{margin-right:5px;}
 .input-filter {font-size: 14px; width: 80%; margin-left: 12px;}
+
+.row-buttons button,
+.row-buttons a {
+  margin-right: 8px;
+}

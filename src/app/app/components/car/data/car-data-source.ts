@@ -19,7 +19,7 @@ export class CarDataSource extends DataSource<Car> {
 
     connect(): Observable<Car[]> {        
         const displayDataChanges = [
-            this.carService.dataChange,
+            this.carService.getSubject(),
             this.sort.sortChange,
             this.filterChange,
             this.paginator.page
@@ -27,7 +27,7 @@ export class CarDataSource extends DataSource<Car> {
 
         this.carService.getAll();
         return merge(...displayDataChanges).pipe(map(() => {
-            this.filteredData = this.carService.data.slice().filter((car: Car) => {
+            this.filteredData = this.carService.getSubject().value.slice().filter((car: Car) => {
                 const searchStr = (car.id + car.name + car.country).toLowerCase();
                 return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
             });

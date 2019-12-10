@@ -15,31 +15,35 @@ export class CarService {
 
   private readonly DATA_URL = 'assets/cars.json'
 
-  dataChange: BehaviorSubject<Car[]> = new BehaviorSubject<Car[]>([]);
-  dialogData: any;
+  subject: BehaviorSubject<Car[]> = new BehaviorSubject<Car[]>([]);
+  current: Car;
 
   constructor(private httpClient: HttpClient) { }
 
-  get data(): Car[] {
-    return this.dataChange.value;
+  getSubject(): BehaviorSubject<Car[]> {
+    return this.subject;
   }
 
-  getDialogData() {
-    return this.dialogData;
+  getCurrent() {
+    return this.current;
   }
 
   getAll(): void {
     this.httpClient.get<Car[]>(this.DATA_URL).subscribe(
-      (data) => this.dataChange.next(data),
-      (error: HttpErrorResponse) => console.log(error.name + ' ' + error.message)
+      (data) => this.subject.next(data),
+      (error: HttpErrorResponse) => console.error(error.name + ' ' + error.message)
     );
   }
 
   add(car: Car): void {
-    this.dialogData = car;
+    this.current = car;
   }
 
   update(car: Car): void {
-    this.dialogData = car;
+    this.current = car;
+  }
+
+  delete(car: Car): void {
+    this.current = null
   }
 }

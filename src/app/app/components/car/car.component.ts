@@ -46,9 +46,9 @@ export class CarComponent implements OnInit {
     const dialogRef = this.dialog.open(CarAddComponent, {data: { car: car }});
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        let nextId = this.databaseService.dataChange.value[this.databaseService.dataChange.value.length-1].id + 1;
-        this.carService.getDialogData().id = nextId
-        this.databaseService.dataChange.value.push(this.carService.getDialogData());
+        let nextId = this.databaseService.getSubject().value[this.databaseService.getSubject().value.length-1].id + 1;
+        this.carService.getCurrent().id = nextId
+        this.databaseService.getSubject().value.push(this.carService.getCurrent());
         this.refreshTable();
       }
     });
@@ -61,9 +61,9 @@ export class CarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.databaseService.dataChange.value.findIndex(x => x.id === row.id);
-        this.databaseService.dataChange.value[foundIndex] = this.carService.getDialogData();
-        this.databaseService.dataChange.value[foundIndex].id = row.id;
+        const foundIndex = this.databaseService.getSubject().value.findIndex(x => x.id === row.id);
+        this.databaseService.getSubject().value[foundIndex] = this.carService.getCurrent();
+        this.databaseService.getSubject().value[foundIndex].id = row.id;
         this.refreshTable();
       }
     });
@@ -76,8 +76,8 @@ export class CarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.databaseService.dataChange.value.findIndex(x => x.id === row.id);
-        this.databaseService.dataChange.value.splice(foundIndex, 1);
+        const foundIndex = this.databaseService.getSubject().value.findIndex(x => x.id === row.id);
+        this.databaseService.getSubject().value.splice(foundIndex, 1);
         this.refreshTable();
       }
     });
