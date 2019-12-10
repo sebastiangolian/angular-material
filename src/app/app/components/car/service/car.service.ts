@@ -36,14 +36,19 @@ export class CarService {
   }
 
   add(car: Car): void {
-    this.current = car;
+    let nextId = this.getSubject().value[this.getSubject().value.length-1].id + 1;
+    car.id = nextId
+    this.getSubject().value.push(car);
   }
 
   update(car: Car): void {
-    this.current = car;
+    const foundIndex = this.getSubject().value.findIndex(x => x.id === car.id);
+    this.getSubject().value[foundIndex] = car;
+    this.getSubject().value[foundIndex].id = car.id;
   }
 
   delete(car: Car): void {
-    this.current = null
+    const foundIndex = this.getSubject().value.findIndex(x => x.id === car.id);
+    this.getSubject().value.splice(foundIndex, 1);
   }
 }

@@ -15,7 +15,6 @@ import { CarDeleteComponent } from './dialog/car-delete/car-delete.component';
 export class CarComponent implements OnInit {
 
   displayedColumns = ['id','name', 'country', 'actions'];
-  databaseService: CarService | null;
   dataSource: CarDataSource | null;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -25,30 +24,18 @@ export class CarComponent implements OnInit {
   constructor(public httpClient: HttpClient, public dialog: MatDialog, public carService: CarService) { }
 
   ngOnInit() {
-    this.loadData();
-  }
-
-  refresh() {
-    this.loadData();
+    this.dataSource = new CarDataSource(this.carService, this.paginator, this.sort);
+    this.filterSubscribe()
   }
 
   private refreshTable() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
-  public loadData() {
-    this.databaseService = new CarService(this.httpClient);
-    this.dataSource = new CarDataSource(this.databaseService, this.paginator, this.sort);
-    this.filterSubscribe()
-  }
-
-  add(car: Car) {
-    const dialogRef = this.dialog.open(CarAddComponent, {data: { car: car }});
+  add() {
+    const dialogRef = this.dialog.open(CarAddComponent, {data: { }});
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        let nextId = this.databaseService.getSubject().value[this.databaseService.getSubject().value.length-1].id + 1;
-        this.carService.getCurrent().id = nextId
-        this.databaseService.getSubject().value.push(this.carService.getCurrent());
         this.refreshTable();
       }
     });
@@ -61,9 +48,6 @@ export class CarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.databaseService.getSubject().value.findIndex(x => x.id === row.id);
-        this.databaseService.getSubject().value[foundIndex] = this.carService.getCurrent();
-        this.databaseService.getSubject().value[foundIndex].id = row.id;
         this.refreshTable();
       }
     });
@@ -76,8 +60,6 @@ export class CarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.databaseService.getSubject().value.findIndex(x => x.id === row.id);
-        this.databaseService.getSubject().value.splice(foundIndex, 1);
         this.refreshTable();
       }
     });

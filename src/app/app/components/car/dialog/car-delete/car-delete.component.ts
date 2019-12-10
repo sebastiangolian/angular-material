@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CarService } from '../../service/car.service';
 
 @Component({
   selector: 'app-car-delete',
@@ -9,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class CarDeleteComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<CarDeleteComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(public dialogRef: MatDialogRef<CarDeleteComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public dataService: CarService) { }
 
   ngOnInit() {}
 
@@ -17,5 +18,7 @@ export class CarDeleteComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onDelete(): void {}
+  onDelete(): void {
+    this.dataService.delete(this.data)
+  }
 }
