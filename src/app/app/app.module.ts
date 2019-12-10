@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatMenuModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, MatDividerModule, MatAutocompleteModule, MatGridListModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, MatSidenavModule, MatStepperModule, MatTabsModule, MatExpansionModule, MatButtonToggleModule, MatChipsModule, MatDialogModule, MatTooltipModule, MatSnackBarModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTreeModule, MatNativeDateModule, MatBadgeModule, MatRippleModule } from '@angular/material';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
-import { PostComponent } from './components/post/post.component';
 import { CarComponent } from './components/car/car.component';
 import { CarAddComponent } from './components/car/dialog/car-add/car-add.component';
 import { CarEditComponent } from './components/car/dialog/car-edit/car-edit.component';
@@ -21,7 +20,6 @@ import { CarOneSideComponent } from './components/car-one-side/car-one-side.comp
     AppComponent,
     HomeComponent,
     AboutComponent,
-    PostComponent,
     CarComponent,
     CarAddComponent,
     CarEditComponent,

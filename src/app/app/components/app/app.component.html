@@ -2,9 +2,8 @@
     <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
     <button mat-button routerLink="/">angular-material</button>
     <button mat-button routerLink="/"><mat-icon>home</mat-icon>home</button>
-    <button mat-button routerLink="/cars"><mat-icon>commute</mat-icon>cars</button><br />
+    <button mat-button routerLink="/cars"><mat-icon>commute</mat-icon>cars-dialog</button><br />
     <button mat-button routerLink="/cars-one-side"><mat-icon>commute</mat-icon>cars-one-side</button><br />
-    <button mat-button routerLink="/posts"><mat-icon>post_add</mat-icon>Posts</button>
     <button mat-button routerLink="/about"><mat-icon>info</mat-icon>about</button>
 </mat-toolbar>
 
@@ -12,7 +11,6 @@
   <mat-sidenav color="primary" #sidenav mode="side" opened="false">
     <button mat-button routerLink="/">Home</button><br />
     <button mat-button routerLink="/cars">Cars</button><br />
-    <button mat-button routerLink="/posts">Posts</button><br />
     <button mat-button routerLink="/about">About</button><br />
   </mat-sidenav>
   <mat-sidenav-content>
