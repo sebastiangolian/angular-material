@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Car } from '../car/service/car.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CarOneSideService } from './service/car-one-side.service';
 import { CarOneSideDataSource } from './data/car-one-side-data-source';
+import { Car } from '../../services/car.service';
 
 @Component({
   templateUrl: './car-one-side.component.html',

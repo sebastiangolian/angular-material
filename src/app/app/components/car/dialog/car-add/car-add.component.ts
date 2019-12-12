@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
-import { Car, CarService } from '../../service/car.service';
+import { Car, CarService } from 'src/app/app/services/car.service';
 
 @Component({
   selector: 'app-car-add',

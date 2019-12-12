@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
-import { Car, CarService } from '../service/car.service';
+import { Car, CarService } from 'src/app/app/services/car.service';
 
 export class CarDataSource extends DataSource<Car> {
     filterChange = new BehaviorSubject('');

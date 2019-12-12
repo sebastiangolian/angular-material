@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CarService } from '../../service/car.service';
+import { CarService } from 'src/app/app/services/car.service';
 
 @Component({
   selector: 'app-car-delete',

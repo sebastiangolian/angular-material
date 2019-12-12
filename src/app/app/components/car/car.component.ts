@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { CarService, Car } from './service/car.service';
 import { CarDataSource } from './data/car-data-source';
 import { CarEditComponent } from './dialog/car-edit/car-edit.component';
 import { CarAddComponent } from './dialog/car-add/car-add.component';
 import { CarDeleteComponent } from './dialog/car-delete/car-delete.component';
+import { CarService, Car } from '../../services/car.service';
 
 @Component({
   templateUrl: './car.component.html',

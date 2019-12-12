@@ -24,10 +24,6 @@ export class CarService {
     return this.subject;
   }
 
-  getCurrent() {
-    return this.current;
-  }
-
   getAll(): void {
     this.httpClient.get<Car[]>(this.DATA_URL).subscribe(
       (data) => this.subject.next(data),
