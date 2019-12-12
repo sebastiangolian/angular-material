@@ -8,11 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatMenuModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatListModule, MatDividerModule, MatAutocompleteModule, MatGridListModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, MatSidenavModule, MatStepperModule, MatTabsModule, MatExpansionModule, MatButtonToggleModule, MatChipsModule, MatDialogModule, MatTooltipModule, MatSnackBarModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTreeModule, MatNativeDateModule, MatBadgeModule, MatRippleModule } from '@angular/material';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
-import { CarComponent } from './components/car/car.component';
-import { CarAddComponent } from './components/car/dialog/car-add/car-add.component';
-import { CarEditComponent } from './components/car/dialog/car-edit/car-edit.component';
-import { CarDeleteComponent } from './components/car/dialog/car-delete/car-delete.component';
 import { CarOneSideComponent } from './components/car-one-side/car-one-side.component';
+import { CarDialogComponent } from './components/car-dialog/car-dialog.component';
+import { CarAddComponent } from './components/car-dialog/dialog/car-add/car-add.component';
+import { CarEditComponent } from './components/car-dialog/dialog/car-edit/car-edit.component';
+import { CarDeleteComponent } from './components/car-dialog/dialog/car-delete/car-delete.component';
 
 
 @NgModule({
@@ -20,11 +20,12 @@ import { CarOneSideComponent } from './components/car-one-side/car-one-side.comp
     AppComponent,
     HomeComponent,
     AboutComponent,
-    CarComponent,
+    CarOneSideComponent,
     CarAddComponent,
     CarEditComponent,
     CarDeleteComponent,
-    CarOneSideComponent
+    CarOneSideComponent,
+    CarDialogComponent
   ],
   imports: [
     BrowserModule,

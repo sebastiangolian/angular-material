@@ -9,10 +9,10 @@ import { CarService, Car } from '../../services/car.service';
 import { CarDataSource } from '../../data-sources/car-data-source';
 
 @Component({
-  templateUrl: './car.component.html',
-  styleUrls: ['./car.component.css']
+  templateUrl: './car-dialog.component.html',
+  styleUrls: ['./car-dialog.component.css']
 })
-export class CarComponent implements OnInit {
+export class CarDialogComponent implements OnInit {
 
   displayedColumns = ['id','name', 'country', 'actions'];
   dataSource: CarDataSource | null;
@@ -73,4 +73,5 @@ export class CarComponent implements OnInit {
         }
       });
   }
+
 }
