@@ -3,8 +3,8 @@ import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CarOneSideDataSource } from './data/car-one-side-data-source';
 import { Car, CarService } from '../../services/car.service';
+import { CarDataSource } from '../../data-sources/car-data-source';
 
 @Component({
   templateUrl: './car-one-side.component.html',
@@ -14,7 +14,7 @@ export class CarOneSideComponent implements OnInit {
 
   displayedColumns = ['id','name','country','actions'];
   currentItem: Car;
-  dataSource: CarOneSideDataSource | null;
+  dataSource: CarDataSource | null;
   formGroup: FormGroup;
   isCreate: boolean = false;
   isModifiy: boolean = false;
@@ -32,7 +32,7 @@ export class CarOneSideComponent implements OnInit {
       country: ['', Validators.required]
     });
     this.resetCurrentItem();
-    this.dataSource = new CarOneSideDataSource(this.carService, this.paginator, this.sort);
+    this.dataSource = new CarDataSource(this.carService, this.paginator, this.sort);
     this.filterSubscribe()
   }
 
