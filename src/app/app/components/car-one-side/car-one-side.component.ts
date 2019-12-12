@@ -3,9 +3,8 @@ import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CarOneSideService } from './service/car-one-side.service';
 import { CarOneSideDataSource } from './data/car-one-side-data-source';
-import { Car } from '../../services/car.service';
+import { Car, CarService } from '../../services/car.service';
 
 @Component({
   templateUrl: './car-one-side.component.html',
@@ -25,7 +24,7 @@ export class CarOneSideComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('filter', { static: true }) filter: ElementRef;
 
-  constructor(public httpClient: HttpClient, public dialog: MatDialog, private formBuilder: FormBuilder, public carService: CarOneSideService) { }
+  constructor(public httpClient: HttpClient, public dialog: MatDialog, private formBuilder: FormBuilder, public carService: CarService) { }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
