@@ -7,10 +7,10 @@ import { Car, CarService } from '../../services/car.service';
 import { CarDataSource } from '../../data-sources/car-data-source';
 
 @Component({
-  templateUrl: './car-one-side.component.html',
-  styleUrls: ['./car-one-side.component.css']
+  templateUrl: './car.component.html',
+  styleUrls: ['./car.component.css']
 })
-export class CarOneSideComponent implements OnInit {
+export class CarComponent implements OnInit {
 
   displayedColumns = ['id','name','country','actions'];
   currentItem: Car;
