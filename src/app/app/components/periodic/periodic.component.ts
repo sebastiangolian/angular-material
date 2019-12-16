@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { PeriodicElement } from './interfaces/periodic-element.interface';
 
@@ -14,6 +14,7 @@ export class PeriodicComponent implements OnInit {
   dataSource: MatTableDataSource<PeriodicElement>;
   
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(public httpClient: HttpClient) { }
 
@@ -22,6 +23,7 @@ export class PeriodicComponent implements OnInit {
       (data) => {
         this.dataSource = new MatTableDataSource<PeriodicElement>(data);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       (error: HttpErrorResponse) => console.error(error.name + ' ' + error.message)
     );
