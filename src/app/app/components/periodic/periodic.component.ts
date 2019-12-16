@@ -27,6 +27,9 @@ export class PeriodicComponent implements OnInit {
       },
       (error: HttpErrorResponse) => console.error(error.name + ' ' + error.message)
     );
-    
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
