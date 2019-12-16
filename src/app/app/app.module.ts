@@ -13,6 +13,7 @@ import { CarAddComponent } from './components/car-dialog/dialog/car-add/car-add.
 import { CarEditComponent } from './components/car-dialog/dialog/car-edit/car-edit.component';
 import { CarDeleteComponent } from './components/car-dialog/dialog/car-delete/car-delete.component';
 import { CarComponent } from './components/car/car.component';
+import { PeriodicComponent } from './components/periodic/periodic.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { CarComponent } from './components/car/car.component';
     CarDeleteComponent,
     CarComponent,
     CarDialogComponent,
-    CarComponent
+    CarComponent,
+    PeriodicComponent
   ],
   imports: [
     BrowserModule,
