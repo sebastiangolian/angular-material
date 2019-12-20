@@ -29,4 +29,20 @@ export class PeriodicArrayService {
   fetchAllObservable(): Observable<PeriodicElement[]> {
     return <Observable<PeriodicElement[]>>this.http.get(this.DATA_URL);
   }
+
+  getAll() {
+
+  }
+
+  add() {
+
+  }
+
+  update() {
+
+  }
+
+  delete() {
+
+  }
 }
