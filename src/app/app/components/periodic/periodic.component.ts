@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { PeriodicElement } from './interfaces/periodic-element.interface';
+import { PeriodicArrayService } from '../../services/periodic-array.service';
 
 @Component({
   templateUrl: './periodic.component.html',
@@ -10,13 +11,13 @@ import { PeriodicElement } from './interfaces/periodic-element.interface';
 export class PeriodicComponent implements OnInit {
 
   private readonly DATA_URL = 'assets/periodic.json'
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'actions'];
   dataSource: MatTableDataSource<PeriodicElement>;
   
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(public httpClient: HttpClient) { }
+  constructor(public httpClient: HttpClient, protected service: PeriodicArrayService) { }
 
   ngOnInit() {
     this.httpClient.get<PeriodicElement[]>(this.DATA_URL).subscribe(
@@ -27,9 +28,26 @@ export class PeriodicComponent implements OnInit {
       },
       (error: HttpErrorResponse) => console.error(error.name + ' ' + error.message)
     );
+
+    console.log(this.service.fetchAllArray())
+    this.service.fetchAllPromise().then(val => console.log(val))
+    this.service.fetchAllObservable().subscribe(val => console.log(val))
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onAdd() {
+
+  }
+
+  onEdit(row:PeriodicElement) {
+    console.log(row)
+  }
+
+  onDelete(row:PeriodicElement) {
+    this.dataSource.data.pop();
+    console.log(row)
   }
 }
