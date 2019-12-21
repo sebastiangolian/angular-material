@@ -6,6 +6,7 @@ import { CarDialogComponent } from './components/car-dialog/car-dialog.component
 import { CarComponent } from './components/car/car.component';
 import { PeriodicComponent } from './components/periodic/periodic.component';
 import { FightersComponent } from './components/fighters/fighters.component';
+import { PostComponent } from './components/post/post.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'periodic', component: PeriodicComponent },
   { path: 'about', component: AboutComponent },
   { path: 'logout', component: HomeComponent },
-  { path: 'fighters', component: FightersComponent }
+  { path: 'fighters', component: FightersComponent },
+  { path: 'posts', component: PostComponent }
 ];
 
 @NgModule({

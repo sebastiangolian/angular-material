@@ -15,6 +15,8 @@ import { CarDeleteComponent } from './components/car-dialog/dialog/car-delete/ca
 import { CarComponent } from './components/car/car.component';
 import { PeriodicComponent } from './components/periodic/periodic.component';
 import { FightersComponent } from './components/fighters/fighters.component';
+import { PostComponent } from './components/post/post.component';
+import { fakeBackendProvider } from './interceptors/fake-backend.interceptor';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { FightersComponent } from './components/fighters/fighters.component';
     CarDialogComponent,
     CarComponent,
     PeriodicComponent,
-    FightersComponent
+    FightersComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +78,7 @@ import { FightersComponent } from './components/fighters/fighters.component';
     MatRippleModule
   ],
   providers: [
+    fakeBackendProvider
   ],
   bootstrap: [
     AppComponent
