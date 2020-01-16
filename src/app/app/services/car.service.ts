@@ -13,7 +13,7 @@ export class Car {
 })
 export class CarService {
 
-  url: string = "http://localhost:4200/posts";
+  url: string = "http://localhost:4200/cars";
 
   constructor(private http: HttpClient) { }
 

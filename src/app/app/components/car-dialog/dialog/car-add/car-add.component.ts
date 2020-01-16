@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
-import { CarBehaviorSubjectService, Car } from 'src/app/app/services/car-behavior-subject.service';
+import { Car, CarService } from 'src/app/app/services/car.service';
 
 @Component({
   selector: 'app-car-add',
@@ -11,7 +11,7 @@ import { CarBehaviorSubjectService, Car } from 'src/app/app/services/car-behavio
 export class CarAddComponent implements OnInit {
 
   formControl = new FormControl('', [Validators.required]);
-  constructor(public dialogRef: MatDialogRef<CarAddComponent>, @Inject(MAT_DIALOG_DATA) public data: Car, public dataService: CarBehaviorSubjectService) { }
+  constructor(public dialogRef: MatDialogRef<CarAddComponent>, @Inject(MAT_DIALOG_DATA) public data: Car, public dataService: CarService) { }
 
   ngOnInit() {}
 
@@ -24,7 +24,7 @@ export class CarAddComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.dataService.add(this.data);
+    this.dataService.create(this.data);
   }
 
 }

@@ -6,7 +6,7 @@ import { CarEditComponent } from './dialog/car-edit/car-edit.component';
 import { CarAddComponent } from './dialog/car-add/car-add.component';
 import { CarDeleteComponent } from './dialog/car-delete/car-delete.component';
 import { CarDataSource } from '../../data-sources/car-data-source';
-import { CarBehaviorSubjectService, Car } from '../../services/car-behavior-subject.service';
+import { CarService, Car } from '../../services/car.service';
 
 @Component({
   templateUrl: './car-dialog.component.html',
@@ -21,7 +21,7 @@ export class CarDialogComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('filter', { static: true }) filter: ElementRef;
 
-  constructor(public httpClient: HttpClient, public dialog: MatDialog, public carService: CarBehaviorSubjectService) { }
+  constructor(public httpClient: HttpClient, public dialog: MatDialog, public carService: CarService) { }
 
   ngOnInit() {
     this.dataSource = new CarDataSource(this.carService, this.paginator, this.sort);

@@ -2,39 +2,50 @@ import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
-import { Car, CarBehaviorSubjectService } from '../services/car-behavior-subject.service';
+import { Car, CarService } from '../services/car.service';
 
 export class CarDataSource extends DataSource<Car> {
     filterChange = new BehaviorSubject('');
+    data: Car[] = [];
     filteredData: Car[] = [];
     renderedData: Car[] = [];
 
-    get filter(): string {return this.filterChange.value;}
-    set filter(filter: string) {this.filterChange.next(filter);}
+    get filter(): string { return this.filterChange.value; }
+    set filter(filter: string) { this.filterChange.next(filter); }
 
-    constructor(public carService: CarBehaviorSubjectService, public paginator: MatPaginator, public sort: MatSort) {
+    constructor(public carService: CarService, public paginator: MatPaginator, public sort: MatSort) {
         super();
         this.filterChange.subscribe(() => this.paginator.pageIndex = 0);
     }
 
-    connect(): Observable<Car[]> {        
+    connect(): Observable<Car[]> {
         const displayDataChanges = [
-            this.carService.getSubject(),
+            this.carService.get(),
             this.sort.sortChange,
             this.filterChange,
             this.paginator.page
         ];
 
-        this.carService.getAll();
-        return merge(...displayDataChanges).pipe(map(() => {
-            this.filteredData = this.carService.getSubject().value.slice().filter((car: Car) => {
-                const searchStr = (car.id + car.name + car.country).toLowerCase();
-                return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-            });
+        return merge(...displayDataChanges).pipe(map((cars) => {
+            if (this.data.length == 0) {
+                this.data = cars
+                this.filteredData = cars
+                this.renderedData = cars
+            }
 
-            const sortedData = this.sortData(this.filteredData.slice());
-            const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-            this.renderedData = sortedData.splice(startIndex, this.paginator.pageSize);
+            if (this.data.length > 0) {
+                this.filteredData = this.data.slice().filter((car: Car) => {
+                    const searchStr = (car.id + car.name + car.country).toLowerCase();
+                    return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+                });
+            }
+
+            if (this.filteredData.length > 0) {
+                const sortedData = this.sortData(this.filteredData.slice());
+                const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+                this.renderedData = sortedData.splice(startIndex, this.paginator.pageSize);
+            }
+
             return this.renderedData;
         }
         ));

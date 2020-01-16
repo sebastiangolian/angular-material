@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CarBehaviorSubjectService } from 'src/app/app/services/car-behavior-subject.service';
+import { CarService } from 'src/app/app/services/car.service';
 
 @Component({
   selector: 'app-car-delete',
@@ -10,7 +10,7 @@ import { CarBehaviorSubjectService } from 'src/app/app/services/car-behavior-sub
 })
 export class CarDeleteComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<CarDeleteComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public dataService: CarBehaviorSubjectService) { }
+  constructor(public dialogRef: MatDialogRef<CarDeleteComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public dataService: CarService) { }
 
   ngOnInit() {}
 

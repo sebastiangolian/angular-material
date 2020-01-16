@@ -4,7 +4,7 @@ import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CarDataSource } from '../../data-sources/car-data-source';
-import { Car, CarBehaviorSubjectService } from '../../services/car-behavior-subject.service';
+import { Car, CarService } from '../../services/car.service';
 
 @Component({
   templateUrl: './car.component.html',
@@ -24,7 +24,7 @@ export class CarComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('filter', { static: true }) filter: ElementRef;
 
-  constructor(public httpClient: HttpClient, public dialog: MatDialog, private formBuilder: FormBuilder, public carService: CarBehaviorSubjectService) { }
+  constructor(public httpClient: HttpClient, public dialog: MatDialog, private formBuilder: FormBuilder, public carService: CarService) { }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
@@ -70,7 +70,7 @@ export class CarComponent implements OnInit {
     this.currentItem.name = this.formGroup.get('name').value;
     this.currentItem.country = this.formGroup.get('country').value;
     if (this.isCreate) {
-      this.carService.add(this.currentItem);
+      this.carService.create(this.currentItem);
     } else {
       this.carService.update(this.currentItem);
     }
