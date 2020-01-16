@@ -18,7 +18,9 @@ export class CarService {
   subject: BehaviorSubject<Car[]> = new BehaviorSubject<Car[]>([]);
   current: Car;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+    this.getAll()
+  }
 
   getSubject(): BehaviorSubject<Car[]> {
     return this.subject;
@@ -32,7 +34,9 @@ export class CarService {
   }
 
   add(car: Car): void {
-    let nextId = this.getSubject().value[this.getSubject().value.length-1].id + 1;
+    let lastRow: Car = this.getSubject().value[this.getSubject().value.length-1];
+    let nextId: number = 1
+    if(lastRow) nextId = lastRow.id + 1;
     car.id = nextId
     this.getSubject().value.push(car);
   }
