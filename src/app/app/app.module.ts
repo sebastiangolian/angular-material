@@ -16,6 +16,7 @@ import { CarComponent } from './components/car/car.component';
 import { PeriodicComponent } from './components/periodic/periodic.component';
 import { FightersComponent } from './components/fighters/fighters.component';
 import { PostComponent } from './components/post/post.component';
+import { backendProvider } from 'src/backend/backend.interceptor';
 
 
 @NgModule({
@@ -77,7 +78,7 @@ import { PostComponent } from './components/post/post.component';
     MatRippleModule
   ],
   providers: [
-
+    backendProvider
   ],
   bootstrap: [
     AppComponent
