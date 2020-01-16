@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
-import { Fighter } from '../components/fighters/fighter';
+
+export interface Fighter {
+  id: number;
+  name: string;
+  wins: number;
+  losses: number;
+}
 
 @Injectable({
   providedIn: 'root'

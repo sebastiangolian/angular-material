@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
-import { PeriodicElement } from '../components/periodic/interfaces/periodic-element.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
 
 @Injectable({
   providedIn: 'root'

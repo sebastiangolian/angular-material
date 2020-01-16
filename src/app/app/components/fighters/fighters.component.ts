@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FightersService } from '../../services/fighters.service';
-import { Fighter } from './fighter';
+import { FightersService, Fighter } from '../../services/fighters.service';
 
 @Component({
   templateUrl: './fighters.component.html',

@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { PeriodicElement } from './interfaces/periodic-element.interface';
-import { PeriodicArrayService } from '../../services/periodic-array.service';
+import { PeriodicArrayService, PeriodicElement } from '../../services/periodic-array.service';
 
 @Component({
   templateUrl: './periodic.component.html',
