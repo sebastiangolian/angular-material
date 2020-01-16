@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CarService, Car } from '../../services/car.service';
+import { Car, CarBehaviorSubjectService } from '../../services/car-behavior-subject.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,7 @@ import { CarService, Car } from '../../services/car.service';
 export class HomeComponent {
   cars: Car[]
 
-  constructor(private carService: CarService) {
+  constructor(private carService: CarBehaviorSubjectService) {
     this.carService.getSubject().subscribe(cars => {
       this.carService.add({id:null, name:"new car",country:"Poland"});
       this.carService.update({id:1, name:"car 111",country:"Poland"});

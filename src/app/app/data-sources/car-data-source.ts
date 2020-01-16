@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
-import { Car, CarService } from 'src/app/app/services/car.service';
+import { Car, CarBehaviorSubjectService } from '../services/car-behavior-subject.service';
 
 export class CarDataSource extends DataSource<Car> {
     filterChange = new BehaviorSubject('');
@@ -12,7 +12,7 @@ export class CarDataSource extends DataSource<Car> {
     get filter(): string {return this.filterChange.value;}
     set filter(filter: string) {this.filterChange.next(filter);}
 
-    constructor(public carService: CarService, public paginator: MatPaginator, public sort: MatSort) {
+    constructor(public carService: CarBehaviorSubjectService, public paginator: MatPaginator, public sort: MatSort) {
         super();
         this.filterChange.subscribe(() => this.paginator.pageIndex = 0);
     }

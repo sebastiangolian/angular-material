@@ -11,7 +11,7 @@ export class Car {
 @Injectable({
   providedIn: 'root'
 })
-export class CarService {
+export class CarBehaviorSubjectService {
 
   private readonly DATA_URL = 'assets/cars.json'
 
