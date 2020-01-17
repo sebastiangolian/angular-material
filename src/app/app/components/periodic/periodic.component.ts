@@ -27,9 +27,6 @@ export class PeriodicComponent implements OnInit {
       },
       (error: HttpErrorResponse) => console.error(error.name + ' ' + error.message)
     );
-
-    this.service.fetchAllPromise().then(val => console.log(val))
-    this.service.fetchAllObservable().subscribe(val => console.log(val))
   }
 
   applyFilter(filterValue: string) {
@@ -41,11 +38,11 @@ export class PeriodicComponent implements OnInit {
   }
 
   onEdit(row:PeriodicElement) {
-    console.log(row)
+    console.info(row)
   }
 
   onDelete(row:PeriodicElement) {
     this.dataSource.data.pop();
-    console.log(row)
+    console.info(row)
   }
 }

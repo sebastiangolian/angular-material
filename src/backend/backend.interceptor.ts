@@ -9,6 +9,7 @@ export class BackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
         let userBackendModel: UserBackendModel = new UserBackendModel(url, body, method);
+        let issueBackendModel: IssueBackendModel = new IssueBackendModel(url, body, method);
 
         return of(null)
             .pipe(mergeMap(handleRoute))
@@ -22,6 +23,7 @@ export class BackendInterceptor implements HttpInterceptor {
             let ret: Observable<HttpEvent<any>> = null
 
             if (ret == null) ret = userBackendModel.handleRoute();
+            if (ret == null) ret = issueBackendModel.handleRoute();
             if (ret == null) ret = next.handle(request)
 
             return ret;
@@ -54,7 +56,29 @@ export class UserBackendModel extends BackendModel<CarBackend> {
     resource: string = "cars"
 }
 
-export class IssueModel extends BackendModel<IssueBackend> {
+export class IssueBackendModel extends BackendModel<IssueBackend> {
     storage: IssueBackend[] = JSON.parse(localStorage.getItem('issues')) || [];
     resource: string = "issues"
+
+    constructor(url:string, body:any, method:string) {
+        super(url, body, method)
+        let storage = JSON.parse(localStorage.getItem(this.resource))
+        if(!storage) {
+            
+            let issues = {
+                "total_count": 1,
+                "incomplete_results": false,
+                "items": [
+                    {
+                        "number": 1,
+                        "title": "feat(cdk/focus-trap) Add ConfigurableFocusTrap classes",
+                        "state": "open",
+                        "created_at": "2020-01-16",
+                    }
+                ]
+            }
+
+            localStorage.setItem('issues',JSON.stringify(issues))
+        }
+    }
 }

@@ -24,7 +24,6 @@ export class CarComponent implements OnInit {
     next: response => console.info(response),
     error: error => console.error(error),
     complete: () => {
-      console.log(this.dataSource)
       this.refreshTable()
     },
   };

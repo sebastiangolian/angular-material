@@ -18,10 +18,10 @@ export class IssueComponent implements AfterViewInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(private _httpClient: HttpClient) { }
 
   ngAfterViewInit() {
     this.exampleDatabase = new ExampleHttpDatabase(this._httpClient);
@@ -72,8 +72,9 @@ export class ExampleHttpDatabase {
   constructor(private _httpClient: HttpClient) {}
 
   getRepoIssues(sort: string, order: string, page: number): Observable<GithubApi> {
-    const href = 'https://api.github.com/search/issues';
-    const requestUrl = `${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${page + 1}`;
-    return this._httpClient.get<GithubApi>(requestUrl);
+    const href = 'http://localhost:4200/issues';
+    //const requestUrl = `${href}?limit=1000&sort=${sort}&order=${order}&page=${page + 1}`;
+
+    return this._httpClient.get<GithubApi>(href);
   }
 }
