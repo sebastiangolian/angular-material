@@ -24,6 +24,6 @@ export class CarEditComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.dataService.update(this.data);
+    this.dataService.update(this.data).subscribe()
   }
 }

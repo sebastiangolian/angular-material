@@ -23,9 +23,7 @@ export class CarComponent implements OnInit {
   httpObserver: PartialObserver<any> = {
     next: response => console.info(response),
     error: error => console.error(error),
-    complete: () => {
-      this.refreshTable()
-    },
+    complete: () => {this.ngOnInit()},
   };
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -44,9 +42,6 @@ export class CarComponent implements OnInit {
     this.filterSubscribe()
   }
 
-  private refreshTable() {
-    this.paginator._changePageSize(this.paginator.pageSize);
-  }
 
   private resetCurrentItem() {
     this.currentItem = { id: -1, name: '', country: ''};
@@ -87,7 +82,6 @@ export class CarComponent implements OnInit {
     }
 
     this.isModifiy = false;
-    this.refreshTable()
   }
 
   onDelete(car: Car) {
@@ -95,7 +89,6 @@ export class CarComponent implements OnInit {
     this.carService.delete(car).subscribe(this.httpObserver);
     this.resetCurrentItem();
     this.isModifiy = false;
-    this.refreshTable()
   }
 
   onCancel() {

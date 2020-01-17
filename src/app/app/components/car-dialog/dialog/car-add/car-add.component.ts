@@ -24,7 +24,7 @@ export class CarAddComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.dataService.create(this.data);
+    this.dataService.create(this.data).subscribe()
   }
 
 }

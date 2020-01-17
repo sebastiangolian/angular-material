@@ -19,6 +19,6 @@ export class CarDeleteComponent implements OnInit {
   }
 
   onDelete(): void {
-    this.dataService.delete(this.data)
+    this.dataService.delete(this.data).subscribe()
   }
 }

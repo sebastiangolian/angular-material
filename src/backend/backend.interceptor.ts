@@ -51,6 +51,11 @@ export interface IssueBackend extends BackendInterface {
     title: string;
 }
 
+export interface Api {
+    items: IssueBackend[];
+    total_count: number;
+  }
+
 export class UserBackendModel extends BackendModel<CarBackend> {
     storage: CarBackend[] = JSON.parse(localStorage.getItem('cars')) || [];
     resource: string = "cars"
@@ -58,6 +63,7 @@ export class UserBackendModel extends BackendModel<CarBackend> {
 
 export class IssueBackendModel extends BackendModel<IssueBackend> {
     storage: IssueBackend[] = JSON.parse(localStorage.getItem('issues')) || [];
+    api_storage: Api = JSON.parse(localStorage.getItem('issues')) || [];
     resource: string = "issues"
 
     constructor(url:string, body:any, method:string) {
@@ -80,5 +86,13 @@ export class IssueBackendModel extends BackendModel<IssueBackend> {
 
             localStorage.setItem('issues',JSON.stringify(issues))
         }
+    }
+
+    create(): Observable<HttpResponse<IssueBackend[]>> {
+        let item = this.body
+        this.api_storage.items.push(item);
+        localStorage.setItem(this.resource, JSON.stringify(this.api_storage));
+        
+        return this.response200(item);
     }
 }
