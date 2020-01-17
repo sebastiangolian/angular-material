@@ -13,11 +13,7 @@ import { CarAddComponent } from './components/car-dialog/dialog/car-add/car-add.
 import { CarEditComponent } from './components/car-dialog/dialog/car-edit/car-edit.component';
 import { CarDeleteComponent } from './components/car-dialog/dialog/car-delete/car-delete.component';
 import { CarComponent } from './components/car/car.component';
-import { PeriodicComponent } from './components/periodic/periodic.component';
-import { FightersComponent } from './components/fighters/fighters.component';
-import { PostComponent } from './components/post/post.component';
 import { backendProvider } from 'src/backend/backend.interceptor';
-import { IssueComponent } from './components/issue/issue.component';
 
 
 @NgModule({
@@ -30,11 +26,7 @@ import { IssueComponent } from './components/issue/issue.component';
     CarDeleteComponent,
     CarComponent,
     CarDialogComponent,
-    CarComponent,
-    PeriodicComponent,
-    FightersComponent,
-    PostComponent,
-    IssueComponent
+    CarComponent
   ],
   imports: [
     BrowserModule,
