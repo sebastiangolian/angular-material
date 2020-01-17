@@ -41,7 +41,20 @@ export interface CarBackend extends BackendInterface {
     country: string;
 }
 
+export interface IssueBackend extends BackendInterface {
+    id: number;
+    created_at: string;
+    number: string;
+    state: string;
+    title: string;
+}
+
 export class UserBackendModel extends BackendModel<CarBackend> {
-    storage:CarBackend[] = JSON.parse(localStorage.getItem('cars')) || [];
-    resource:string = "cars"
+    storage: CarBackend[] = JSON.parse(localStorage.getItem('cars')) || [];
+    resource: string = "cars"
+}
+
+export class IssueModel extends BackendModel<IssueBackend> {
+    storage: IssueBackend[] = JSON.parse(localStorage.getItem('issues')) || [];
+    resource: string = "issues"
 }

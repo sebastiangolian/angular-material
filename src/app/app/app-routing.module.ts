@@ -7,6 +7,7 @@ import { CarComponent } from './components/car/car.component';
 import { PeriodicComponent } from './components/periodic/periodic.component';
 import { FightersComponent } from './components/fighters/fighters.component';
 import { PostComponent } from './components/post/post.component';
+import { IssueComponent } from './components/issue/issue.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'logout', component: HomeComponent },
   { path: 'fighters', component: FightersComponent },
-  { path: 'posts', component: PostComponent }
+  { path: 'posts', component: PostComponent },
+  { path: 'issue', component: IssueComponent }
 ];
 
 @NgModule({

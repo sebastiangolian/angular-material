@@ -17,6 +17,7 @@ import { PeriodicComponent } from './components/periodic/periodic.component';
 import { FightersComponent } from './components/fighters/fighters.component';
 import { PostComponent } from './components/post/post.component';
 import { backendProvider } from 'src/backend/backend.interceptor';
+import { IssueComponent } from './components/issue/issue.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { backendProvider } from 'src/backend/backend.interceptor';
     CarComponent,
     PeriodicComponent,
     FightersComponent,
-    PostComponent
+    PostComponent,
+    IssueComponent
   ],
   imports: [
     BrowserModule,
