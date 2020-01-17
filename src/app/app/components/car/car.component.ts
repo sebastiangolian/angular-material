@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { fromEvent } from 'rxjs';
+import { fromEvent, PartialObserver } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CarDataSource } from '../../data-sources/car-data-source';
@@ -19,6 +19,15 @@ export class CarComponent implements OnInit {
   isCreate: boolean = false;
   isModifiy: boolean = false;
   formButtonName: string;
+
+  httpObserver: PartialObserver<any> = {
+    next: response => console.info(response),
+    error: error => console.error(error),
+    complete: () => {
+      console.log(this.dataSource)
+      this.refreshTable()
+    },
+  };
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -50,9 +59,12 @@ export class CarComponent implements OnInit {
 
   onAdd() {
     this.formGroup.reset();
+    this.formGroup.get('name').setValue("car " + Math.floor(Math.random() * 1000));
+    this.formGroup.get('country').setValue("Poland");
     this.isCreate = true;
     this.isModifiy = true;
     this.formButtonName = 'Add';
+    
   }
 
   onEdit(car: Car) {
@@ -70,9 +82,9 @@ export class CarComponent implements OnInit {
     this.currentItem.name = this.formGroup.get('name').value;
     this.currentItem.country = this.formGroup.get('country').value;
     if (this.isCreate) {
-      this.carService.create(this.currentItem);
+      this.carService.create(this.currentItem).subscribe(this.httpObserver);
     } else {
-      this.carService.update(this.currentItem);
+      this.carService.update(this.currentItem).subscribe(this.httpObserver);
     }
 
     this.isModifiy = false;
@@ -81,7 +93,7 @@ export class CarComponent implements OnInit {
 
   onDelete(car: Car) {
     if (car.id < 0) return;
-    this.carService.delete(car);
+    this.carService.delete(car).subscribe(this.httpObserver);
     this.resetCurrentItem();
     this.isModifiy = false;
     this.refreshTable()

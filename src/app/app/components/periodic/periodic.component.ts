@@ -28,7 +28,6 @@ export class PeriodicComponent implements OnInit {
       (error: HttpErrorResponse) => console.error(error.name + ' ' + error.message)
     );
 
-    console.log(this.service.fetchAllArray())
     this.service.fetchAllPromise().then(val => console.log(val))
     this.service.fetchAllObservable().subscribe(val => console.log(val))
   }
