@@ -26,11 +26,11 @@ export class CarDataSource extends DataSource<Car> {
             this.paginator.page
         ];
 
-        return merge(...displayDataChanges).pipe(map((cars) => {
-            if (this.data.length == 0) {
-                this.data = cars
-                this.filteredData = cars
-                this.renderedData = cars
+        return merge(...displayDataChanges).pipe(map((res:any) => {
+            if (this.data.length == 0 && typeof res == "object") {
+                this.data = res.items
+                this.filteredData = res.items
+                this.renderedData = res.items
             }
 
             if (this.data.length > 0) {
