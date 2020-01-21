@@ -21,8 +21,7 @@ h1{margin: 20px;}
 .mat-expansion-panel{margin:10px;width:60%;}
 button{margin-right:5px;}
 .input-filter{ width: 80%!important;margin-left:10px;}
+.loading-data {position: absolute;top: 0;left: 0;bottom: 56px;right: 0;background: rgba(0, 0, 0, 0.15);z-index: 1;display: flex;align-items: center;justify-content: center;}
 
 .row-buttons button,
-.row-buttons a {
-  margin-right: 8px;
-}
+.row-buttons a {margin-right: 8px;}
