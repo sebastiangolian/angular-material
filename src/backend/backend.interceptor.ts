@@ -13,7 +13,7 @@ export class BackendInterceptor implements HttpInterceptor {
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize())
-            .pipe(delay(1))
+            .pipe(delay(200))
             .pipe(dematerialize());
 
         function handleRoute() {

@@ -10,7 +10,7 @@
     </div>
   
     <!-- TABLE -->
-    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+    <mat-table #table [dataSource]="data" matSort class="mat-cell">
   
        <!-- ID-->
        <ng-container matColumnDef="id">
@@ -37,12 +37,12 @@
     </mat-table>
   
     <!-- NO RESULTS -->
-    <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+    <div class="no-results" [style.display]="data.length == 0 ? '' : 'none'">
       No results
     </div>
   
     <!-- PAGINATOR -->
-    <mat-paginator #paginator [length]="dataSource.filteredData.length" pageIndex="0" pageSize="5"
+    <mat-paginator #paginator [length]="resultsLength" pageIndex="0" pageSize="5"
       [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
   </div>
