@@ -174,7 +174,7 @@ export class BackendModel<T extends BackendInterface> {
         return data.filter((i) => {
             let values = Object.values(i).filter(value => {
                 if(typeof value == "string") {
-                    return value.includes(filter)
+                    return value.toLowerCase().includes(filter.toLowerCase())
                 } 
             })
 

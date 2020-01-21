@@ -6,12 +6,10 @@
       Loading data
   </div>
 
-  <!-- SEARCH -->
-  <div class="form">
-    <mat-form-field floatPlaceholder="never" color="accent">
-      <input matInput #filter placeholder="Search...">
-    </mat-form-field>
-  </div>
+  <!-- FILTER -->
+  <mat-form-field floatPlaceholder="never" color="accent">
+    <input matInput (keyup)="onFilter($event.target.value)" placeholder="Search..." id="filter" #filter>
+  </mat-form-field>
 
   <!-- TABLE -->
   <mat-table #table [dataSource]="data" matSort class="mat-cell" matSortActive="id" matSortDisableClear matSortDirection="desc">
