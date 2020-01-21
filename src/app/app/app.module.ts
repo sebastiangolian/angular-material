@@ -14,6 +14,7 @@ import { CarEditComponent } from './components/car-dialog/dialog/car-edit/car-ed
 import { CarDeleteComponent } from './components/car-dialog/dialog/car-delete/car-delete.component';
 import { CarComponent } from './components/car/car.component';
 import { backendProvider } from 'src/backend/backend.interceptor';
+import { CarNewComponent } from './components/car-new/car-new.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { backendProvider } from 'src/backend/backend.interceptor';
     CarDeleteComponent,
     CarComponent,
     CarDialogComponent,
-    CarComponent
+    CarComponent,
+    CarNewComponent
   ],
   imports: [
     BrowserModule,
