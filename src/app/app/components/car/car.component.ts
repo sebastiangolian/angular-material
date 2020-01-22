@@ -106,7 +106,7 @@ export class CarComponent implements OnInit {
   private subscribeData() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page, fromEvent(document.getElementById('filter'),'keyup'))
+    merge(this.sort.sortChange, this.paginator.page, fromEvent(document.getElementById('filter-car'),'keyup'))
       .pipe(
         startWith({}),
         switchMap(() => {

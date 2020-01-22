@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { fromEvent, PartialObserver } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { fromEvent, PartialObserver, merge, of } from 'rxjs';
 import { CarEditComponent } from './dialog/car-edit/car-edit.component';
 import { CarAddComponent } from './dialog/car-add/car-add.component';
 import { CarDeleteComponent } from './dialog/car-delete/car-delete.component';
-import { CarDataSource } from '../../data-sources/car-data-source';
 import { CarService, Car } from '../../services/car.service';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
 @Component({
   templateUrl: './car-dialog.component.html',
@@ -15,27 +14,29 @@ import { CarService, Car } from '../../services/car.service';
 export class CarDialogComponent implements OnInit {
 
   displayedColumns = ['id','name', 'country', 'actions'];
-  dataSource: CarDataSource | null;
+  data: Car[] = [];
+  isLoadingResults: boolean = true;
+  resultsLength: number = 0;
+  filterText: string = "";
 
   httpObserver: PartialObserver<any> = {
     next: response => console.info(response),
     error: error => console.error(error),
-    complete: () => {this.ngOnInit()},
+    complete: () => {this.refreshData() },
   };
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('filter', { static: true }) filter: ElementRef;
 
-  constructor(public httpClient: HttpClient, public dialog: MatDialog, public carService: CarService) { }
+  constructor(public dialog: MatDialog, public carService: CarService) { }
 
   ngOnInit() {
-    this.dataSource = new CarDataSource(this.carService, this.paginator, this.sort);
-    this.filterSubscribe()
+    this.subscribeData()
   }
 
   add() {
-    const dialogRef = this.dialog.open(CarAddComponent, {data: { }});
+    const dialogRef = this.dialog.open(CarAddComponent, {
+      data: { id: -1, name: "car " + Math.floor(Math.random() * 1000), country: "Poland"}});
     dialogRef.afterClosed().subscribe(this.httpObserver);
   }
 
@@ -55,13 +56,34 @@ export class CarDialogComponent implements OnInit {
     dialogRef.afterClosed().subscribe(this.httpObserver);
   }
 
-  private filterSubscribe() {
-    fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (this.dataSource) {
-          this.dataSource.filter = this.filter.nativeElement.value;
-        }
-      });
+  onFilter(filterValue: string) {
+    this.filterText = filterValue.trim().toLowerCase();
+  }
+
+  private refreshData() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
+
+  private subscribeData() {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page, fromEvent(document.getElementById('filter-car-dialog'),'keyup'))
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.carService.get(this.paginator.pageSize, this.paginator.pageIndex, this.sort.active + "." + this.sort.direction, this.filterText);
+        }),
+        map(data => {
+          this.isLoadingResults = false;
+          this.resultsLength = data.total_items;
+          return data.items;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          return of([]);
+        })
+      ).subscribe(data => this.data = data);
   }
 
 }
